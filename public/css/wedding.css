@@ -1,0 +1,1458 @@
+/* =========================================================
+   WEDDING INVITATION + ADMIN
+   Rafi & Ina
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #faf8f6;
+    color: #333;
+    overflow-x: hidden;
+}
+
+section {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Playfair Display", serif;
+}
+
+/* =========================================================
+   INVITATION
+========================================================= */
+
+#cover {
+    height: 100vh;
+    background: linear-gradient(135deg, #f4e4d4, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cover-content {
+    text-align: center;
+}
+
+button,
+.btn {
+    padding: 12px 25px;
+    background: #b68d40;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+#mainContent {
+    display: none;
+}
+
+.hero {
+    background: white;
+}
+
+.fade {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: 1s;
+}
+
+.fade.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+#timer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+#timer div {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    min-width: 80px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#timer span {
+    display: block;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* =========================================================
+   MEMPELAI & GALERI
+========================================================= */
+
+.couple {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* =========================================================
+   RSVP
+========================================================= */
+
+#rsvpForm {
+    max-width: 500px;
+    margin: 30px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#rsvpForm input,
+#rsvpForm select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+#rsvpForm input:focus,
+#rsvpForm select:focus {
+    outline: none;
+    border-color: #c8a97e;
+    box-shadow: 0 0 12px rgba(200, 169, 126, 0.25);
+}
+
+#rsvpForm button {
+    background: linear-gradient(135deg, #c8a97e, #b08a5b);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    transition: 0.3s;
+}
+
+#rsvpForm button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(176, 138, 91, 0.3);
+}
+
+#rsvpForm button:active {
+    transform: scale(0.98);
+}
+
+#status {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.rsvp-section {
+    background: white;
+    max-width: 650px;
+    margin: auto;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+#jumlahwrapper {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* =========================================================
+   WISH FORM
+========================================================= */
+
+.wish-form {
+    max-width: 500px;
+    margin: 30px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.wish-form input,
+.wish-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.wish-form input:focus,
+.wish-form textarea:focus {
+    outline: none;
+    border-color: #c8a97e;
+    box-shadow: 0 0 12px rgba(200, 169, 126, 0.25);
+}
+
+.wish-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.wish-form button {
+    background: linear-gradient(135deg, #c8a97e, #b08a5b);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    transition: 0.3s;
+}
+
+.wish-form button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(176, 138, 91, 0.3);
+}
+
+.wish-form button:active {
+    transform: scale(0.98);
+}
+
+/* =========================================================
+   WISH LIST
+========================================================= */
+
+.wishes-section {
+    background: white;
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.wishes-list {
+    max-width: 650px;
+    margin: 35px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.wish-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: #fff;
+    padding: 18px 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(200, 169, 126, 0.12);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.wish-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.wish-avatar {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #c8a97e, #b08a5b);
+    color: white;
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(176, 138, 91, 0.2);
+}
+
+.wish-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.wish-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.wish-content h3 {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.wish-time {
+    display: block;
+    margin-top: 3px;
+    font-family: "Poppins", sans-serif;
+    color: #aaa;
+    font-size: 11px;
+}
+
+.wish-heart {
+    font-size: 22px;
+    color: #c8a97e;
+    line-height: 1;
+}
+
+.wish-message {
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: #faf8f6;
+    border-radius: 14px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+    white-space: pre-line;
+    border-left: 3px solid #c8a97e;
+}
+
+.wish-empty {
+    background: #fff;
+    padding: 35px 20px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.wish-empty-icon {
+    font-size: 40px;
+    color: #c8a97e;
+    margin-bottom: 10px;
+}
+
+.wish-empty p {
+    margin: 0 0 6px;
+    font-weight: 500;
+}
+
+.wish-empty small {
+    color: #999;
+}
+
+.wish-enter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.wish-enter.wish-show {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+}
+
+.wishes-list .wish-card {
+    animation: wishFadeIn 0.5s ease both;
+}
+
+@keyframes wishFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wish-load-more {
+    border: none;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+}
+
+.wish-load-more:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.wish-pagination {
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* =========================================================
+   ADMIN GLOBAL
+========================================================= */
+
+.admin-page {
+    min-height: 100vh;
+    background: #f7f4f1;
+    color: #333;
+    font-family: "Poppins", sans-serif;
+}
+
+.admin-header {
+    background: linear-gradient(135deg, #b08a5b, #c8a97e);
+    color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.admin-header-inner {
+    max-width: 1200px;
+    min-height: 72px;
+    margin: auto;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+    flex-shrink: 0;
+}
+
+.admin-brand h1 {
+    margin: 0;
+    font-family: "Playfair Display", serif;
+    font-size: 21px;
+}
+
+.admin-brand p {
+    margin: 2px 0 0;
+    font-size: 11px;
+    opacity: 0.85;
+}
+
+.admin-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Playfair Display", serif;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.admin-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+}
+
+.admin-nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 9px 12px;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+.admin-nav-link:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.admin-logout {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    padding: 9px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    transition: 0.2s;
+}
+
+.admin-logout:hover {
+    background: white;
+    color: #b08a5b;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px 50px;
+}
+
+.admin-alert {
+    padding: 14px 16px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.admin-alert-success {
+    background: #eaf6ef;
+    color: #17653a;
+}
+
+.admin-alert-error {
+    background: #fbe9eb;
+    color: #982d37;
+}
+
+.admin-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.admin-page-header h2 {
+    margin: 0;
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+}
+
+.admin-page-header p {
+    margin: 5px 0 0;
+    color: #888;
+    font-size: 13px;
+}
+
+.admin-page-actions,
+.admin-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #c8a97e, #b08a5b);
+    color: white;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.admin-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(176, 138, 91, 0.25);
+}
+
+.admin-btn-secondary {
+    background: white;
+    color: #b08a5b;
+    border: 1px solid #e4d5c1;
+}
+
+.admin-btn-success {
+    background: #198754;
+}
+
+.admin-btn-danger {
+    background: #dc3545;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(200, 169, 126, 0.08);
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e3ddd5;
+    border-radius: 12px;
+    background: #fff;
+    color: #333;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.admin-input:focus,
+.admin-select:focus,
+.admin-textarea:focus {
+    outline: none;
+    border-color: #c8a97e;
+    box-shadow: 0 0 0 3px rgba(200, 169, 126, 0.12);
+}
+
+.admin-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.admin-form-card {
+    max-width: 700px;
+    padding: 25px;
+}
+
+.admin-form-group {
+    margin-bottom: 20px;
+}
+
+.admin-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.admin-help {
+    display: block;
+    margin-top: 6px;
+    color: #999;
+    font-size: 11px;
+}
+
+/* =========================================================
+   ADMIN DASHBOARD
+========================================================= */
+
+.admin-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.admin-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(200, 169, 126, 0.08);
+    transition: 0.3s;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.admin-stat-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5eee5;
+    font-size: 20px;
+}
+
+.admin-stat-label {
+    font-size: 12px;
+    color: #888;
+}
+
+.admin-stat-number {
+    margin-top: 3px;
+    font-size: 27px;
+    font-weight: 600;
+    color: #333;
+}
+
+.admin-stat-success .admin-stat-icon,
+.admin-stat-arrived .admin-stat-icon {
+    background: #eaf6ef;
+}
+
+.admin-stat-warning .admin-stat-icon {
+    background: #fff5dc;
+}
+
+.admin-section-title {
+    margin: 35px 0 18px;
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+}
+
+.admin-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.admin-menu-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    text-decoration: none;
+    background: white;
+    padding: 22px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.admin-menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.admin-menu-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    font-size: 21px;
+    background: #f5eee5;
+}
+
+.admin-menu-card h3 {
+    margin: 0 0 5px;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.admin-menu-card p {
+    margin: 0;
+    color: #888;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.admin-menu-green .admin-menu-icon {
+    background: #eaf6ef;
+}
+
+.admin-menu-brown .admin-menu-icon {
+    background: #f5eee5;
+}
+
+.admin-menu-gold .admin-menu-icon {
+    background: #fff5dc;
+}
+
+.admin-menu-blue .admin-menu-icon {
+    background: #edf4ff;
+}
+
+.admin-menu-purple .admin-menu-icon {
+    background: #f2eafa;
+}
+
+/* =========================================================
+   ADMIN TABLE
+========================================================= */
+
+.admin-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 18px;
+}
+
+.admin-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.admin-table th {
+    padding: 14px 16px;
+    background: #faf7f3;
+    color: #777;
+    font-weight: 500;
+    text-align: left;
+    border-bottom: 1px solid #eee6dc;
+}
+
+.admin-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0ece7;
+    vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+    background: #fffdfb;
+}
+
+.admin-code {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 8px;
+    background: #f7f0e6;
+    color: #a17d4d;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #f1f1f1;
+    color: #777;
+    font-size: 11px;
+}
+
+.admin-badge.confirmed,
+.admin-badge.arrived {
+    background: #eaf6ef;
+    color: #17653a;
+}
+
+.admin-badge.declined {
+    background: #fbe9eb;
+    color: #982d37;
+}
+
+.admin-badge.pending {
+    background: #fff4d9;
+    color: #89691f;
+}
+
+.admin-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.admin-table-actions form {
+    margin: 0;
+}
+
+.admin-action {
+    border: none;
+    background: #f7f1e8;
+    color: #a17d4d;
+    text-decoration: none;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.admin-action:hover {
+    background: #eadbc5;
+}
+
+.admin-action-danger {
+    background: #fbe9eb;
+    color: #982d37;
+}
+
+.admin-pagination {
+    padding: 18px;
+}
+
+.admin-empty {
+    text-align: center;
+    color: #999;
+    padding: 30px !important;
+}
+
+/* =========================================================
+   ADMIN LOGIN
+========================================================= */
+
+.admin-login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+    background: radial-gradient(
+        circle at top,
+        rgba(200, 169, 126, 0.15),
+        transparent 45%
+    );
+}
+
+.admin-login-card {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    padding: 35px;
+    border-radius: 24px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(200, 169, 126, 0.12);
+}
+
+.admin-login-brand {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.admin-login-logo {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #c8a97e, #b08a5b);
+    color: white;
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    box-shadow: 0 8px 20px rgba(176, 138, 91, 0.22);
+}
+
+.admin-login-brand h1 {
+    margin: 0;
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+    color: #333;
+}
+
+.admin-login-brand p {
+    margin: 5px 0 0;
+    color: #999;
+    font-size: 13px;
+}
+
+.admin-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.admin-login-button {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.admin-login-footer {
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 1px solid #eee7df;
+    text-align: center;
+    color: #aaa;
+    font-size: 11px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+    .admin-header-inner {
+        flex-wrap: wrap;
+    }
+
+    .admin-nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        margin-left: 0;
+    }
+
+    .admin-nav-link {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 768px) {
+    #rsvpForm input,
+    #rsvpForm select,
+    .wish-form input,
+    .wish-form textarea {
+        font-size: 14px;
+    }
+
+    #rsvpForm button {
+        width: 100%;
+    }
+
+    .wish-card {
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .wish-avatar {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        font-size: 18px;
+    }
+
+    .wish-content h3 {
+        font-size: 14px;
+    }
+
+    .wish-message {
+        font-size: 13px;
+        padding: 12px 14px;
+    }
+
+    .admin-header-inner {
+        padding: 15px;
+    }
+
+    .admin-container {
+        padding: 20px 15px 40px;
+    }
+
+    .admin-brand h1 {
+        font-size: 19px;
+    }
+
+    .admin-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .admin-stat-card {
+        padding: 15px;
+        gap: 10px;
+        border-radius: 15px;
+    }
+
+    .admin-stat-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        border-radius: 11px;
+        font-size: 16px;
+    }
+
+    .admin-stat-number {
+        font-size: 21px;
+    }
+
+    .admin-menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-section-title {
+        font-size: 20px;
+    }
+
+    .admin-page-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-page-header h2 {
+        font-size: 23px;
+    }
+
+    .admin-page-actions,
+    .admin-form-actions {
+        width: 100%;
+    }
+
+    .admin-page-actions .admin-btn,
+    .admin-form-actions .admin-btn {
+        flex: 1;
+    }
+
+    .admin-login-card {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .admin-login-brand h1 {
+        font-size: 25px;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-search-form {
+        flex-direction: column;
+    }
+
+    .admin-guest-result-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   GUEST QR CHECK-IN
+========================================================= */
+
+.guest-qr-section {
+    max-width: 500px;
+    margin: 30px auto 0;
+    padding: 30px 20px;
+
+    text-align: center;
+
+    background: #fff;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+    border: 1px solid rgba(200, 169, 126, 0.12);
+}
+
+.guest-qr-icon {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eaf6ef;
+
+    color: #198754;
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.guest-qr-section h3 {
+    margin: 0 0 8px;
+
+    font-size: 22px;
+}
+
+.guest-qr-section p {
+    margin: 0 auto 20px;
+
+    max-width: 380px;
+
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.guest-qr-card {
+    display: flex;
+    justify-content: center;
+
+    margin: 20px auto;
+
+    padding: 15px;
+
+    width: fit-content;
+
+    background: white;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.guest-qr-code {
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    background: #f7f0e6;
+
+    color: #a17d4d;
+
+    font-weight: 600;
+
+    letter-spacing: 1px;
+
+    font-size: 13px;
+}
+
+.guest-qr-section small {
+    display: block;
+
+    margin-top: 12px;
+
+    color: #999;
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   ADMIN QR CODE
+========================================================= */
+
+.admin-qr-page {
+    display: grid;
+    grid-template-columns: 280px minmax(320px, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.admin-qr-guest-card {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.admin-qr-avatar {
+    margin: 0 auto 12px;
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    font-size: 22px;
+}
+
+.admin-qr-guest-card h3 {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.admin-qr-subtitle {
+    margin: 5px 0 18px;
+    color: #999;
+    font-size: 13px;
+}
+
+.admin-qr-code-label {
+    margin-bottom: 7px;
+    color: #999;
+    font-size: 11px;
+}
+
+.admin-qr-card {
+    padding: 30px;
+    text-align: center;
+}
+
+.admin-qr-title {
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    color: #333;
+}
+
+.admin-qr-description {
+    max-width: 430px;
+    margin: 8px auto 20px;
+    color: #888;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.admin-qr-image {
+    width: fit-content;
+    margin: 20px auto;
+    padding: 18px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(200, 169, 126, 0.12);
+}
+
+.admin-qr-image svg {
+    display: block;
+}
+
+.admin-qr-url {
+    max-width: 520px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.admin-qr-url span {
+    display: block;
+    margin-bottom: 7px;
+    color: #777;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.admin-qr-url input {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #e3ddd5;
+    border-radius: 10px;
+    background: #faf8f6;
+    color: #666;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+}
+
+.admin-qr-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .admin-qr-page {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-qr-card {
+        padding: 20px 15px;
+    }
+
+    .admin-qr-image {
+        padding: 12px;
+    }
+
+    .admin-qr-image svg {
+        width: 250px;
+        height: 250px;
+    }
+
+    .admin-qr-actions {
+        flex-direction: column;
+    }
+
+    .admin-qr-actions .admin-btn {
+        width: 100%;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .admin-header,
+    .admin-page-header,
+    .admin-qr-guest-card,
+    .admin-qr-url,
+    .admin-qr-actions {
+        display: none !important;
+    }
+
+    .admin-container {
+        padding: 0;
+        max-width: none;
+    }
+
+    .admin-qr-page {
+        display: block;
+    }
+
+    .admin-qr-card {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+    }
+
+    .admin-qr-image {
+        box-shadow: none;
+        border: none;
+    }
+}
+
+.admin-copy-link {
+    display: flex;
+    gap: 8px;
+}
+
+.admin-copy-link input {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-copy-btn {
+    border: none;
+    padding: 0 16px;
+    border-radius: 10px;
+
+    background: #f7f0e6;
+    color: #a17d4d;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.admin-copy-btn:hover {
+    background: #eadbc5;
+}
+
+.admin-copy-status {
+    display: block;
+    margin-top: 6px;
+
+    color: #198754;
+    font-size: 11px;
+}
+
+@media (max-width: 600px) {
+    .admin-copy-link {
+        flex-direction: column;
+    }
+
+    .admin-copy-btn {
+        min-height: 42px;
+    }
+}
