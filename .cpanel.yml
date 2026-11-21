@@ -1,0 +1,8 @@
+```yaml
+---
+deployment:
+  tasks:
+    - /bin/echo "Sasqi-Rian Wedding deployment started"
+    - /bin/echo "Application is served directly from repository public directory"
+    - /bin/echo "Deployment completed"
+```
