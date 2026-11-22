@@ -31,11 +31,7 @@ class GuestsExport implements FromCollection, WithHeadings
                         route(
                             'invitation.show',
                             [
-                                'code' => str_replace(
-                                'RAFIINA-',
-                                '',
-                                $guest->unique_code
-                            ),
+                                'code' => $guest->short_code,
                             ]
                         ),
 

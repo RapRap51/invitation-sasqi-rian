@@ -209,7 +209,7 @@
                 <div class="notice notice-error">@foreach ($errors->all() as $error)<p>{{ $error }}</p>@endforeach</div>
             @endif
 
-            <form id="rsvpForm" class="form-card reveal" method="POST" action="{{ route('rsvp.store', ['code' => str_replace('RAFIINA-', '', $guest->unique_code)]) }}">
+            <form id="rsvpForm" class="form-card reveal" method="POST" action="{{ route('rsvp.store', ['code' => $guest->short_code]) }}">
                 @csrf
                 <label for="nama">Nama lengkap</label>
                 <input type="text" name="nama" id="nama" value="{{ $guest->name }}" placeholder="Nama Anda" required>
@@ -231,7 +231,7 @@
 
             @if ($guest->rsvp_status === 'confirmed')
                 @php
-                    $shortCode = str_replace('RAFIINA-', '', $guest->unique_code);
+                    $shortCode = $guest->short_code;
                     $checkinUrl = route('invitation.show', ['code' => $shortCode]);
                 @endphp
                 <div class="guest-qr-section reveal" id="guest-qr">
@@ -254,7 +254,7 @@
             @if (session('wish_success'))
                 <div class="notice notice-success">{{ session('wish_success') }}</div>
             @endif
-            <form method="POST" action="{{ route('wish.store', ['code' => str_replace('RAFIINA-', '', $guest->unique_code)]) }}" class="wish-form form-card reveal">
+            <form method="POST" action="{{ route('wish.store', ['code' => $guest->short_code]) }}" class="wish-form form-card reveal">
                 @csrf
                 <label for="wishName">Nama</label>
                 <input type="text" name="nama" id="wishName" placeholder="Nama Anda" required>

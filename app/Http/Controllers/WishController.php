@@ -12,7 +12,7 @@ class WishController extends Controller
     {
         $guest = Guest::where(
             'unique_code',
-            'RAFIINA-' . strtoupper($code)
+            Guest::fullCode($code)
         )->firstOrFail();
 
         $validated = $request->validate([

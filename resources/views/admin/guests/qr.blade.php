@@ -5,11 +5,7 @@
 @section('content')
 
 @php
-    $shortCode = str_replace(
-        'RAFIINA-',
-        '',
-        $guest->unique_code
-    );
+    $shortCode = $guest->short_code;
 
     $invitationUrl = route(
         'invitation.show',

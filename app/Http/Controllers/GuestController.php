@@ -48,7 +48,7 @@ class GuestController extends Controller
     {
         return Excel::download(
             new GuestsExport,
-            'daftar-tamu-rafi-ina.xlsx'
+            'daftar-tamu-sasqia-rian.xlsx'
         );
     }
 
@@ -111,7 +111,7 @@ class GuestController extends Controller
     {
     return Excel::download(
         new GuestTemplateExport,
-        'template-import-tamu-rafi-ina.xlsx'
+        'template-import-tamu-sasqia-rian.xlsx'
     );
     }
 }

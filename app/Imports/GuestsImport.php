@@ -51,7 +51,7 @@ class GuestsImport implements ToModel, WithHeadingRow
 
         // Generate kode unik undangan
         do {
-            $uniqueCode = 'RAFIINA-' . strtoupper(Str::random(6));
+            $uniqueCode = Guest::fullCode(Str::random(6));
         } while (
             Guest::where('unique_code', $uniqueCode)->exists()
         );

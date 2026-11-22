@@ -22,10 +22,11 @@ class CheckinController extends Controller
             ],
         ]);
 
-        $guest = Guest::where(
-            'qr_token',
-            $request->token
-        )->first();
+        // QR undangan berisi URL dengan kode pendek (mis. /undangan/AB12CD);
+        // tetap dukung qr_token untuk QR lama yang berisi token langsung.
+        $guest = Guest::where('unique_code', Guest::fullCode($request->token))
+            ->orWhere('qr_token', $request->token)
+            ->first();
 
         if (!$guest) {
             return response()->json([

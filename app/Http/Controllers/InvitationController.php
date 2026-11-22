@@ -12,7 +12,7 @@ class InvitationController extends Controller
     {
         $guest = Guest::where(
             'unique_code',
-            'RAFIINA-' . strtoupper($code)
+            Guest::fullCode($code)
         )->firstOrFail();
 
         $wishes = Wish::latest()
@@ -28,7 +28,7 @@ class InvitationController extends Controller
     {
         Guest::where(
             'unique_code',
-            'RAFIINA-' . strtoupper($code)
+            Guest::fullCode($code)
         )->firstOrFail();
 
         $wishes = Wish::latest()

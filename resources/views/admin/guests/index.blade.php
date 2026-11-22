@@ -89,7 +89,7 @@
 
                         <td>
                             <span class="admin-code">
-                                {{ str_replace('RAFIINA-', '', $guest->unique_code) }}
+                                {{ $guest->short_code }}
                             </span>
                         </td>
 
