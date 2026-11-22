@@ -1,8 +1,15 @@
-```yaml
 ---
+# Deploy in place: cPanel runs these tasks from the repository root, and the
+# domain's document root points at this repository's public/ directory.
 deployment:
   tasks:
-    - /bin/echo "Sasqi-Rian Wedding deployment started"
-    - /bin/echo "Application is served directly from repository public directory"
-    - /bin/echo "Deployment completed"
-```
+    - /bin/echo "Sasqi-Rian Wedding deployment started in $(pwd)"
+    - /opt/cpanel/composer/bin/composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+    - /usr/local/bin/php artisan down --retry=15 || true
+    - /usr/local/bin/php artisan migrate --force
+    - /usr/local/bin/php artisan optimize:clear
+    - /usr/local/bin/php artisan config:cache
+    - /usr/local/bin/php artisan route:cache
+    - /usr/local/bin/php artisan view:cache
+    - /usr/local/bin/php artisan up
+    - /bin/echo "Sasqi-Rian Wedding deployment completed"

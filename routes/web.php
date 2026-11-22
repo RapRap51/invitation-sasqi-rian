@@ -19,6 +19,9 @@ use App\Http\Controllers\WishController;
 |--------------------------------------------------------------------------
 */
 
+// Halaman depan diarahkan ke login admin.
+Route::redirect('/', '/login');
+
 // Undangan
 Route::get('/undangan/{code}', [
     InvitationController::class,
