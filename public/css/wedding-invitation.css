@@ -1316,17 +1316,38 @@ body.wedding-site {
 .pan-window::-webkit-scrollbar {
     display: none;
 }
-/* Kunci tampilan terang walau HP memakai dark mode (sama seperti desain asli) */
-:root,
-html,
-body {
-    color-scheme: only light;
+/* Dark mode: halaman menyatakan mendukung "light dark" agar Samsung Internet / Chrome Android
+   tidak memaksa menggelapkan, lalu "tema gelap"-nya dibuat sama dengan desain terang asli. */
+:root {
+    color-scheme: light dark;
 }
 input,
 select,
 textarea,
-button {
-    color-scheme: only light;
+button,
+.form-card,
+.cover-bottom {
+    color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --paper: #fbf4ef;
+        --paper-deep: #f3e5e6;
+        --ink: #4e263b;
+        --ink-soft: #795667;
+        --wine: #88445f;
+    }
+    html,
+    body {
+        background: #fbf4ef;
+        color: #4e263b;
+    }
+    input,
+    select,
+    textarea {
+        background-color: #fffaf8;
+        color: #4e263b;
+    }
 }
 
 .gsap-ready .pan-window {

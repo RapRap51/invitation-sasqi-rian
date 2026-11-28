@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f8edf1">
-    {{-- Undangan hanya punya tampilan terang; cegah browser (Chrome Android, Samsung Internet,
-         dll.) menggelapkan halaman secara otomatis saat HP memakai dark mode. --}}
-    <meta name="color-scheme" content="only light">
-    <meta name="supported-color-schemes" content="light only">
+    {{-- Cegah browser HP (Samsung Internet, Chrome Android) menggelapkan undangan secara paksa.
+         Browser hanya berhenti memaksa gelap bila halaman mengaku punya tema gelap sendiri,
+         jadi kita nyatakan "light dark" — tema gelapnya (di CSS) sengaja dibuat sama persis
+         dengan tampilan terang. --}}
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
     <title data-i18n="meta.title">Undangan Pernikahan Sasqia & Rian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
