@@ -77,7 +77,6 @@
         textTl
             .from(".cover-top", { y: -40, autoAlpha: 0, duration: .9 })
             .from(".cover-title", { scale: .85, autoAlpha: 0, filter: "blur(8px)", duration: 1.1, ease: "power2.out" }, "-=.5")
-            .from(".cover-date", { autoAlpha: 0, y: 8, duration: .6 }, "-=.5")
             .from(".cover-bottom", { y: 50, autoAlpha: 0, duration: .9 }, "-=.6")
             .from(".guest-greeting > *", { y: 14, autoAlpha: 0, duration: .55, stagger: .1 }, "-=.5")
             .from(openButton, { y: 16, autoAlpha: 0, scale: .9, duration: .7, ease: "back.out(2)", ...withoutTransition(openButton) }, "-=.3")
@@ -197,11 +196,8 @@
 
         /* HERO */
         const heroTl = gsap.timeline({ defaults: { ease: EASE }, delay: .15 });
-        const heroNames = $$(".hero-names span").flatMap(span => splitText(span, "chars"));
         heroTl
-            .from(".hero-wedding-of", { y: 20, autoAlpha: 0, filter: "blur(6px)", duration: .8 })
-            .from(heroNames, { yPercent: 110, rotation: 8, autoAlpha: 0, duration: .9, stagger: .06, ease: "back.out(1.7)" }, "-=.3")
-            .from(".hero-names i", { scale: 0, rotation: -90, autoAlpha: 0, duration: .8, ease: "back.out(2)" }, "-=.6")
+            .from(".hero-logo", { y: 30, scale: .92, autoAlpha: 0, filter: "blur(8px)", duration: 1.2, ease: "power2.out" })
             .from(".hero-subtitle", { y: 20, autoAlpha: 0, duration: .7 }, "-=.4")
             .from(".hero-copy .ornament-divider", { scaleX: 0, autoAlpha: 0, duration: .8 }, "-=.4")
             .from(".hero-date", { letterSpacing: "0.6em", autoAlpha: 0, duration: .8 }, "-=.5")

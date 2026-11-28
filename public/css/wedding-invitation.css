@@ -1874,3 +1874,47 @@ body.wedding-site {
 .pan-hint b {
     font-weight: inherit;
 }
+
+/* ==========================================================
+   Logo "the wedding of Sasqia & Rian" (sampul & hero)
+========================================================== */
+.cover-logo,
+.hero-logo {
+    margin: 0;
+    line-height: 0;
+}
+.cover-logo img,
+.hero-logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+}
+/* Sampul: logo tanpa panel latar (cahaya putih sudah ada di gambar) */
+.cover-top {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+}
+/* Logo bercahaya dibuat besar; sisi atas/bawahnya hanya cahaya, jadi boleh melebar
+   melewati panel dan sedikit ditarik ke atas agar tidak menutupi amplop. */
+.cover-logo img {
+    position: relative;
+    left: 50%;
+    width: min(108vw, 500px);
+    max-width: none;
+    max-height: none;
+    margin: -8svh 0 -6svh;
+    transform: translateX(-50%);
+}
+.hero-logo {
+    margin: 0 auto 18px;
+}
+.hero-logo img {
+    width: min(100%, 440px);
+}

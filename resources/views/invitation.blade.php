@@ -8,7 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,500;1,400;1,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/wedding-invitation.css') }}">
+    @php
+        // Tambah ?v=<waktu ubah file> agar browser tamu selalu memuat CSS/JS terbaru
+        // (server menyimpan cache file statis selama 7 hari).
+        $versioned = fn (string $path) => asset($path) . '?v=' . @filemtime(public_path($path));
+    @endphp
+    <link rel="stylesheet" href="{{ $versioned('css/wedding-invitation.css') }}">
 </head>
 <body class="wedding-site">
     <audio id="music" loop preload="none">
@@ -44,8 +49,12 @@
 
         <div class="cover-inner">
             <div class="cover-top">
-                <h1 class="cover-title">Sasqia <span>&</span> Rian</h1>
-                <p class="cover-date">23 · 01 · 2027</p>
+                <h1 class="cover-title cover-logo">
+                    <picture>
+                        <source srcset="{{ asset('img/brand/wedding-logo-glow.webp') }}" type="image/webp">
+                        <img src="{{ asset('img/brand/wedding-logo-glow.png') }}" alt="The wedding of Sasqia & Rian" width="1260" height="984">
+                    </picture>
+                </h1>
             </div>
 
             <button type="button" class="envelope-hotspot" onclick="openInvitation()" aria-label="Buka undangan" data-i18n-aria="cover.openAria">
@@ -100,8 +109,12 @@
                 <span class="garden-vine vine-left">❧</span><span class="garden-vine vine-right">❧</span>
             </div>
             <div class="hero-copy reveal">
-                <p class="hero-wedding-of" data-i18n="common.weddingOf">pernikahan</p>
-                <h1 class="hero-names"><span>Sasqia</span><i>&</i><span>Rian</span></h1>
+                <h1 class="hero-logo">
+                    <picture>
+                        <source srcset="{{ asset('img/brand/wedding-logo.webp') }}" type="image/webp">
+                        <img src="{{ asset('img/brand/wedding-logo.png') }}" alt="The wedding of Sasqia & Rian" width="1110" height="660">
+                    </picture>
+                </h1>
                 <p class="hero-subtitle" data-i18n="hero.subtitle">Kami mengundangmu ke hari bahagia kami.</p>
                 <div class="ornament-divider"><span>❦</span></div>
                 <p class="hero-date" data-i18n="hero.date">SABTU, 23 JANUARI 2027</p>
@@ -318,8 +331,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="{{ asset('js/wedding-i18n.js') }}"></script>
-    <script src="{{ asset('js/wedding-invitation.js') }}"></script>
-    <script src="{{ asset('js/wedding-gsap.js') }}"></script>
+    <script src="{{ $versioned('js/wedding-i18n.js') }}"></script>
+    <script src="{{ $versioned('js/wedding-invitation.js') }}"></script>
+    <script src="{{ $versioned('js/wedding-gsap.js') }}"></script>
 </body>
 </html>
