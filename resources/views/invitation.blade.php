@@ -23,7 +23,7 @@
 </head>
 <body class="wedding-site">
     <audio id="music" loop preload="none">
-        <source src="{{ asset('music.mp3') }}" type="audio/mpeg">
+        <source src="{{ $versioned('music.mp3') }}" type="audio/mpeg">
     </audio>
 
     <div class="ambient ambient-one" aria-hidden="true"></div>
@@ -109,12 +109,12 @@
             </div>
         </header>
 
-        <section id="home" class="hero-section section-shell">
-            <div class="hero-garden-art" aria-hidden="true">
-                <span class="garden-orb orb-a"></span><span class="garden-orb orb-b"></span>
-                <span class="garden-vine vine-left">❧</span><span class="garden-vine vine-right">❧</span>
+        {{-- Hero: latar taman gazebo + cutout Sasqia & Rian berdansa di depannya --}}
+        <section id="home" class="hero-section hero-scene">
+            <div class="hero-bg" aria-hidden="true">
+                <img src="{{ asset('img/scenes/hero-garden.webp') }}" alt="" width="2000" height="1125" fetchpriority="high">
             </div>
-            <div class="hero-copy reveal">
+            <div class="hero-copy">
                 <h1 class="hero-logo">
                     <picture>
                         <source srcset="{{ asset('img/brand/wedding-logo.webp') }}" type="image/webp">
@@ -127,13 +127,9 @@
                 <p class="wedding-hashtag">#TIARAandtheDANIS</p>
                 <a href="#event" class="text-link"><span data-i18n="hero.details">Lihat detail acara</span> <span>↓</span></a>
             </div>
-            <div class="hero-photo-wrap reveal">
-                <div class="hero-photo-frame">
-                    <img src="{{ asset('img/scenes/scene-hero.jpg') }}" alt="Ilustrasi Sasqia dan Rian berdansa di depan gazebo" data-i18n-alt="hero.alt">
-                </div>
-                <span class="photo-caption" data-i18n="hero.caption">Sebuah kisah kecil, cinta untuk selamanya</span>
+            <div class="hero-couple">
+                <img src="{{ asset('img/scenes/hero-couple.webp') }}" alt="Ilustrasi Sasqia dan Rian berdansa di depan gazebo" data-i18n-alt="hero.alt" width="1123" height="1751">
             </div>
-            <div class="scroll-cue"><b data-i18n="hero.scroll">GULIR UNTUK MENJELAJAH</b> <span>↓</span></div>
         </section>
 
         <section class="quote-section scene-section section-shell">
@@ -218,7 +214,9 @@
                     <h2 data-i18n-html="gallery.title">Galeri <em>Cerita</em></h2>
                 </div>
                 <div class="gallery-frame">
-                    <img src="{{ asset('img/gallery/photo-1.jpg') }}" alt="" loading="lazy">
+                    {{-- Foto dipotong oval di belakang, bingkai emas + bunga di depannya --}}
+                    <div class="gallery-frame-photo"><img src="{{ asset('img/gallery/photo-1.jpg') }}" alt="" loading="lazy"></div>
+                    <img class="gallery-frame-border" src="{{ asset('img/brand/gallery-frame.webp') }}" alt="" width="1317" height="1280" loading="lazy">
                 </div>
                 <button type="button" class="button button-primary gallery-open" aria-controls="galleryCollage" aria-expanded="false" data-i18n="gallery.open">Buka Galeri</button>
             </div>
@@ -313,7 +311,6 @@
         </section>
 
         <section class="closing-section section-shell reveal">
-            <div class="closing-photo"><img src="{{ asset('img/scenes/scene-closing.jpg') }}" alt="Sasqia dan Rian" data-i18n-alt="closing.alt"></div>
             <div class="closing-flower">❀</div>
             <p class="eyebrow" data-i18n="closing.eyebrow">DENGAN CINTA DAN TERIMA KASIH</p>
             <h2 data-i18n="closing.title">Terima Kasih</h2>

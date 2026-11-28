@@ -187,7 +187,7 @@
         if (mainBuilt) return;
         mainBuilt = true;
 
-        gsap.set(".scroll-cue, .mobile-dock", { xPercent: -50, x: 0 });
+        gsap.set(".mobile-dock", { xPercent: -50, x: 0 });
 
         // Header & dock
         gsap.from(".site-header", { yPercent: -100, autoAlpha: 0, duration: .9, ease: EASE });
@@ -203,26 +203,16 @@
             .from(".hero-date", { letterSpacing: "0.6em", autoAlpha: 0, duration: .8 }, "-=.5")
             .from(".hero-copy .wedding-hashtag", { y: 10, autoAlpha: 0, duration: .6 }, "-=.4")
             .from(".hero-copy .text-link", { y: 12, autoAlpha: 0, duration: .5 }, "-=.4")
-            .from(".hero-photo-frame", {
-                clipPath: "inset(100% 0% 0% 0% round 48% 48% 8px 8px)",
-                rotation: -6, y: 50, autoAlpha: 0, duration: 1.3, ease: "power4.out"
-            }, .2)
-            .from(".hero-photo-frame img", { scale: 1.35, duration: 1.8, ease: "power2.out" }, .2)
-            .from(".photo-caption", { y: 15, autoAlpha: 0, duration: .7 }, 1.1)
-            .from(".scroll-cue", { autoAlpha: 0, y: 10, duration: .6 }, "-=.2");
+            .from(".hero-bg img", { scale: 1.12, duration: 2.2, ease: "power2.out" }, 0)
+            .from(".hero-couple", { y: 80, autoAlpha: 0, duration: 1.4, ease: "power3.out" }, .35);
 
-        gsap.to(".scroll-cue span", { y: 6, duration: .8, ease: "sine.inOut", yoyo: true, repeat: -1 });
         gsap.to(".hero-copy .text-link span", { y: 4, duration: .7, ease: "sine.inOut", yoyo: true, repeat: -1 });
+        // Pasangan sedikit berayun seperti sedang berdansa
+        gsap.to(".hero-couple img", { rotation: 1.2, y: -4, transformOrigin: "50% 100%", duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.6 });
 
-        // Ornamen taman melayang
-        gsap.to(".orb-a", { y: -30, x: 20, duration: 6, ease: "sine.inOut", yoyo: true, repeat: -1 });
-        gsap.to(".orb-b", { y: 25, x: -25, duration: 7, ease: "sine.inOut", yoyo: true, repeat: -1 });
-        gsap.to(".vine-left", { rotation: 10, y: -12, duration: 4.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
-        gsap.to(".vine-right", { rotation: -10, y: 12, duration: 5, ease: "sine.inOut", yoyo: true, repeat: -1 });
-
-        // Parallax foto hero saat scroll
-        gsap.to(".hero-photo-wrap", {
-            yPercent: -10, ease: "none",
+        // Parallax: latar bergerak lebih lambat dari pasangan saat scroll
+        gsap.to(".hero-bg", {
+            yPercent: 12, ease: "none",
             scrollTrigger: { trigger: ".hero-section", start: "top top", end: "bottom top", scrub: true }
         });
         gsap.to(".hero-copy", {
@@ -312,9 +302,12 @@
             const PAN_SHARE = 1 / 1.24; // porsi timeline untuk pergeseran (lihat durasi di atas)
             // Panorama sedang "menempel" di layar (area pin)
             const inPin = () => window.scrollY >= st.start - 2 && window.scrollY <= st.end + 2;
+            // Sensitivitas geser kanan-kiri: 1 = gambar ikut jari 1:1, 2.5 = gerakan
+            // jari pendek sudah cukup untuk berpindah dari Sasqia ke Rian.
+            const SWIPE_SENSITIVITY = 2.5;
             const scrollPerPixel = () => {
                 const span = Math.abs(focusX(GROOM_X) - focusX(BRIDE_X)) || 1;
-                return ((st.end - st.start) * PAN_SHARE) / span;
+                return ((st.end - st.start) * PAN_SHARE * SWIPE_SENSITIVITY) / span;
             };
             // Posisi tujuan disimpan sendiri: halaman memakai scroll-behavior smooth,
             // jadi window.scrollY belum berubah saat gerakan berikutnya datang.
@@ -408,7 +401,7 @@
             gsap.timeline({ scrollTrigger: onScroll(galleryStage, "top 70%"), defaults: { ease: EASE } })
                 .from($(".gallery-frame", galleryStage), { scale: .85, autoAlpha: 0, duration: 1.1 })
                 .from($(".gallery-open", galleryStage), { y: 16, autoAlpha: 0, duration: .6, ...withoutTransition($(".gallery-open", galleryStage)) }, "-=.4");
-            gsap.to(".gallery-frame img", { scale: 1.06, duration: 6, ease: "sine.inOut", yoyo: true, repeat: -1 });
+            gsap.to(".gallery-frame-photo img", { scale: 1.06, duration: 6, ease: "sine.inOut", yoyo: true, repeat: -1 });
             gsap.to(".swipe-hand", { x: -14, rotation: -12, duration: .8, ease: "sine.inOut", yoyo: true, repeat: -1 });
             document.addEventListener("gallery:opened", () => {
                 gsap.fromTo(".collage-item img", { y: 40, scale: .96 }, { y: 0, scale: 1, duration: .9, stagger: .08, ease: EASE, clearProps: "transform" });
@@ -464,9 +457,7 @@
         const closing = $(".closing-section");
         if (closing) {
             gsap.timeline({ scrollTrigger: onScroll(closing, "top 75%"), defaults: { ease: EASE } })
-                .from($(".closing-photo", closing), { clipPath: "inset(100% 0% 0% 0% round 48% 48% 10px 10px)", y: 40, duration: 1.3, ease: "power4.out" })
-                .from($(".closing-photo img", closing), { scale: 1.3, duration: 1.6, ease: "power2.out" }, "<")
-                .from($(".closing-flower", closing), { scale: 0, rotation: -270, autoAlpha: 0, duration: 1.2, ease: "back.out(1.8)" }, "-=.8")
+                .from($(".closing-flower", closing), { scale: 0, rotation: -270, autoAlpha: 0, duration: 1.2, ease: "back.out(1.8)" })
                 .from($$(".eyebrow, h2, :scope > p:not(.closing-sign):not(.closing-wedding-of):not(.wedding-hashtag)", closing), { y: 24, autoAlpha: 0, stagger: .14, duration: .7 }, "-=.6")
                 .from($(".closing-wedding-of", closing), { y: 14, autoAlpha: 0, duration: .6 }, "-=.2")
                 .from($(".closing-sign", closing), { scale: .6, autoAlpha: 0, filter: "blur(6px)", duration: 1.1, ease: "power2.out" }, "-=.2")
