@@ -2058,3 +2058,62 @@ button,
         height: clamp(360px, 52svh, 640px);
     }
 }
+
+/* ==========================================================
+   Amplop digital (nomor rekening + salin)
+========================================================== */
+.gift-section {
+    background: linear-gradient(180deg, var(--paper), rgba(243, 229, 230, 0.55));
+}
+.gift-section .section-heading {
+    margin-bottom: 36px;
+}
+.gift-card {
+    width: min(100%, 400px);
+    margin: 0 auto;
+    padding: 30px 26px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    border: 1px solid rgba(145, 93, 118, 0.22);
+    border-radius: 8px 48px 8px 48px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--shadow);
+}
+.gift-bank {
+    width: 150px;
+    height: auto;
+    margin-bottom: 14px;
+}
+.gift-number {
+    margin: 0;
+    color: var(--ink);
+    font: 600 clamp(26px, 7vw, 32px)/1.2 var(--serif);
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+    user-select: all;
+}
+.gift-name {
+    margin: 0 0 18px;
+    color: var(--ink-soft);
+    font: italic 16px/1.5 var(--serif);
+}
+.gift-copy {
+    min-width: 220px;
+}
+.gift-copy.is-copied {
+    background: linear-gradient(135deg, #7d9a74, #5c7a55);
+}
+
+/* Galeri di layar PC yang pendek: bingkai mengecil mengikuti tinggi layar
+   dan tombol "Buka Galeri" selalu di atas bingkai (tidak tertutup foto/bunga). */
+.gallery-frame {
+    width: min(88vw, 420px, calc((100svh - 280px) * 1.03));
+    min-width: 240px;
+}
+.gallery-open {
+    position: relative;
+    z-index: 3;
+}

@@ -280,6 +280,39 @@
         });
     }
 
+    // Amplop digital: salin nomor rekening (clipboard API, fallback untuk http / browser lama).
+    async function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            try { await navigator.clipboard.writeText(text); return true; } catch (e) { /* lanjut fallback */ }
+        }
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.setAttribute("readonly", "");
+        area.style.cssText = "position:fixed;top:0;left:0;opacity:0;";
+        document.body.appendChild(area);
+        area.select();
+        area.setSelectionRange(0, text.length);
+        let ok = false;
+        try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+        area.remove();
+        return ok;
+    }
+
+    document.querySelectorAll(".gift-copy[data-copy]").forEach(button => {
+        const label = button.querySelector(".gift-copy-label");
+        let timer;
+        button.addEventListener("click", async () => {
+            const ok = await copyText(button.dataset.copy);
+            window.clearTimeout(timer);
+            button.classList.toggle("is-copied", ok);
+            label.textContent = ok ? t("gift.copied", "Tersalin ✓") : t("gift.copyFail", "Salin manual: " + button.dataset.copy);
+            timer = window.setTimeout(() => {
+                button.classList.remove("is-copied");
+                label.textContent = t("gift.copy", "Salin Nomor Rekening");
+            }, 2200);
+        });
+    });
+
     // Direct QR links can open the invitation and move to the QR area.
     document.addEventListener("DOMContentLoaded", () => {
         const params = new URLSearchParams(window.location.search);

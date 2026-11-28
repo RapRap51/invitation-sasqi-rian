@@ -125,7 +125,7 @@
                 <div class="ornament-divider"><span>❦</span></div>
                 <p class="hero-date" data-i18n="hero.date">SABTU, 23 JANUARI 2027</p>
                 <p class="wedding-hashtag">#TIARAandtheDANIS</p>
-                <a href="#event" class="text-link"><span data-i18n="hero.details">Lihat detail acara</span> <span>↓</span></a>
+                <!-- <a href="#event" class="text-link"><span data-i18n="hero.details">Lihat detail acara</span> <span>↓</span></a> -->
             </div>
             <div class="hero-couple">
                 <img src="{{ asset('img/scenes/hero-couple.webp') }}" alt="Ilustrasi Sasqia dan Rian berdansa di depan gazebo" data-i18n-alt="hero.alt" width="1123" height="1751">
@@ -201,6 +201,7 @@
         <section id="gallery" class="gallery-stage" aria-label="Galeri" data-i18n-aria="nav.gallery">
             {{-- Kolase foto: hitam-putih & samar di belakang sampul, berwarna & bisa digeser setelah "Buka Galeri". --}}
             <div class="gallery-collage" id="galleryCollage" tabindex="-1" aria-label="Galeri foto, geser ke kanan atau kiri" data-i18n-aria="gallery.trackAria">
+                <figure class="collage-item"><img src="{{ asset('img/gallery/photo-6.jpg') }}" alt="Rian memeluk Sasqia dari belakang" data-i18n-alt="gallery.alt6" loading="lazy" draggable="false"></figure>
                 <figure class="collage-item"><img src="{{ asset('img/gallery/photo-1.jpg') }}" alt="Sasqia dan Rian menunjukkan cincin" data-i18n-alt="gallery.alt1" loading="lazy" draggable="false"></figure>
                 <figure class="collage-item"><img src="{{ asset('img/gallery/photo-2.jpg') }}" alt="Sasqia dan Rian di depan dekorasi bunga" data-i18n-alt="gallery.alt2" loading="lazy" draggable="false"></figure>
                 <figure class="collage-item"><img src="{{ asset('img/gallery/photo-3.jpg') }}" alt="Rian menyampaikan sambutan" data-i18n-alt="gallery.alt3" loading="lazy" draggable="false"></figure>
@@ -223,6 +224,23 @@
 
             <button type="button" class="gallery-close" aria-label="Tutup galeri" data-i18n-aria="gallery.close" hidden>✕</button>
             <div class="gallery-swipe" aria-hidden="true"><span class="swipe-hand">☝</span><span data-i18n="gallery.swipe">Geser</span></div>
+        </section>
+
+        {{-- Amplop digital: nomor rekening + tombol salin --}}
+        <section id="gift" class="gift-section section-shell">
+            <div class="section-heading reveal">
+                <p class="eyebrow" data-i18n="gift.eyebrow">TANDA KASIH</p>
+                <h2 data-i18n-html="gift.title">Amplop <em>Digital</em></h2>
+                <p data-i18n="gift.lead">Doa restu Anda adalah karunia yang sangat berarti bagi kami. Namun jika ingin memberikan tanda kasih, Anda dapat mengirimkannya melalui rekening berikut.</p>
+            </div>
+            <article class="gift-card reveal">
+                <img class="gift-bank" src="{{ asset('img/brand/bca-logo.webp') }}" alt="Bank BCA" width="600" height="190" loading="lazy">
+                <p class="gift-number">1520 7794 65</p>
+                <p class="gift-name"><span data-i18n="gift.holder">a.n.</span> Sasqia Tiara Megaprilia</p>
+                <button type="button" class="button button-primary gift-copy" data-copy="1520779465">
+                    <span class="gift-copy-label" data-i18n="gift.copy" aria-live="polite">Salin Nomor Rekening</span>
+                </button>
+            </article>
         </section>
 
         <section id="rsvp" class="rsvp-section section-shell">

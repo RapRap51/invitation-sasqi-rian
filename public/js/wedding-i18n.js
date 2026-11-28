@@ -22,7 +22,9 @@
         "music.play": "Putar musik",
         "music.pause": "Jeda musik",
         "wishes.loading": "Memuat ucapan...",
-        "wishes.retry": "Coba lagi"
+        "wishes.retry": "Coba lagi",
+        "gift.copied": "Tersalin ✓",
+        "gift.copyFail": "Salin manual: 1520779465"
     };
 
     const en = {
@@ -95,6 +97,15 @@
         "gallery.alt3": "Rian giving a speech",
         "gallery.alt4": "Sasqia and Rian laughing together",
         "gallery.alt5": "Sasqia and Rian sitting side by side",
+        "gallery.alt6": "Rian embracing Sasqia from behind",
+
+        "gift.eyebrow": "A TOKEN OF LOVE",
+        "gift.title": "Wedding <em>Gift</em>",
+        "gift.lead": "Your prayers and blessings mean the world to us. Should you wish to send a token of love, you may do so through the account below.",
+        "gift.holder": "Account name:",
+        "gift.copy": "Copy Account Number",
+        "gift.copied": "Copied ✓",
+        "gift.copyFail": "Copy manually: 1520779465",
 
         "rsvp.eyebrow": "KINDLY RESPOND",
         "rsvp.title": "Confirm Your <em>Attendance</em>",
