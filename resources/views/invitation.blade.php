@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f8edf1">
+    {{-- Undangan hanya punya tampilan terang; cegah browser (Chrome Android, Samsung Internet,
+         dll.) menggelapkan halaman secara otomatis saat HP memakai dark mode. --}}
+    <meta name="color-scheme" content="only light">
+    <meta name="supported-color-schemes" content="light only">
     <title data-i18n="meta.title">Undangan Pernikahan Sasqia & Rian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -153,13 +157,13 @@
                 <div class="pan-backdrop" style="background-image:url('{{ asset('img/scenes/couple-panorama.webp') }}')" aria-hidden="true"></div>
                 <div class="pan-window">
                     <div class="pan-track">
-                        <img src="{{ asset('img/scenes/couple-panorama.webp') }}" alt="Ilustrasi Sasqia dan Rian berdansa di taman wisteria" data-i18n-alt="couple.alt">
+                        <img src="{{ asset('img/scenes/couple-panorama.webp') }}" alt="Ilustrasi Sasqia dan Rian berdansa di taman wisteria" data-i18n-alt="couple.alt" draggable="false">
                     </div>
                     <div class="pan-dots" aria-hidden="true">
                         <span class="pan-dot pan-dot-bride">Sasqia</span>
                         <span class="pan-dot pan-dot-groom">Rian</span>
                     </div>
-                    <p class="pan-hint" aria-hidden="true"><b data-i18n="couple.hint">Gulir untuk berkenalan</b> <span>↓</span></p>
+                    <p class="pan-hint" aria-hidden="true"><b data-i18n="couple.hint">Gulir atau geser untuk berkenalan</b> <span>↓</span></p>
                 </div>
             </div>
             <div class="sr-only">

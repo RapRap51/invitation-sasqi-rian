@@ -300,9 +300,71 @@
                     .fromTo(".pan-dot-groom", { opacity: .35, scale: 1 }, { opacity: 1, scale: 1.35, duration: .3 }, .45)
                     .to(".pan-hint", { autoAlpha: 0, duration: .2 }, .2)
                     .to({}, { duration: .12 });                                  // jeda sebentar di mempelai pria
+                return panTl;
             };
             // Lebar panorama sudah diketahui dari aspect-ratio di CSS, jadi bisa langsung dipasang.
-            setupPan();
+            const panTl = setupPan();
+
+            /* Geser kanan-kiri (sentuh, drag mouse, trackpad) ikut menggerakkan panorama.
+               Gerakan horizontal diubah menjadi scroll halaman di dalam area pin,
+               jadi tetap sinkron dengan geser atas-bawah. */
+            const st = panTl.scrollTrigger;
+            const PAN_SHARE = 1 / 1.24; // porsi timeline untuk pergeseran (lihat durasi di atas)
+            // Panorama sedang "menempel" di layar (area pin)
+            const inPin = () => window.scrollY >= st.start - 2 && window.scrollY <= st.end + 2;
+            const scrollPerPixel = () => {
+                const span = Math.abs(focusX(GROOM_X) - focusX(BRIDE_X)) || 1;
+                return ((st.end - st.start) * PAN_SHARE) / span;
+            };
+            // Posisi tujuan disimpan sendiri: halaman memakai scroll-behavior smooth,
+            // jadi window.scrollY belum berubah saat gerakan berikutnya datang.
+            let panTarget = null, panTargetAt = 0;
+            const nudge = dx => {
+                // dx > 0: jari/mouse ke kanan → kembali ke mempelai wanita (scroll naik)
+                const now = performance.now();
+                const from = panTarget !== null && now - panTargetAt < 400 ? panTarget : window.scrollY;
+                panTarget = gsap.utils.clamp(st.start + 1, st.end - 1, from - dx * scrollPerPixel());
+                panTargetAt = now;
+                window.scrollTo({ top: panTarget, behavior: "instant" });
+            };
+
+            let drag = null;
+            win.addEventListener("pointerdown", e => {
+                if (!inPin() || (e.pointerType === "mouse" && e.button !== 0)) return;
+                drag = { id: e.pointerId, x: e.clientX, y: e.clientY, horizontal: null };
+            });
+            win.addEventListener("pointermove", e => {
+                if (!drag || e.pointerId !== drag.id) return;
+                const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+                if (drag.horizontal === null) {
+                    if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+                    drag.horizontal = Math.abs(dx) > Math.abs(dy);
+                    if (!drag.horizontal) { drag = null; return; }
+                    win.classList.add("is-dragging");
+                    if (win.setPointerCapture) win.setPointerCapture(e.pointerId);
+                }
+                e.preventDefault();
+                nudge(dx);
+                drag.x = e.clientX;
+                drag.y = e.clientY;
+            });
+            const endDrag = () => { drag = null; win.classList.remove("is-dragging"); };
+            win.addEventListener("pointerup", endDrag);
+            win.addEventListener("pointercancel", endDrag);
+            win.addEventListener("lostpointercapture", endDrag);
+            // Trackpad / mouse dengan scroll horizontal
+            win.addEventListener("wheel", e => {
+                if (!inPin() || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+                e.preventDefault();
+                nudge(-e.deltaX);
+            }, { passive: false });
+            // Panah kiri/kanan saat panorama sedang tampil
+            document.addEventListener("keydown", e => {
+                if (!inPin() || (e.key !== "ArrowLeft" && e.key !== "ArrowRight")) return;
+                if (e.target.closest && e.target.closest("input, textarea, select, .gallery-collage")) return;
+                e.preventDefault();
+                nudge(e.key === "ArrowRight" ? -120 : 120);
+            });
 
             gsap.set(".pan-dot-bride", { scale: 1.35 });
             gsap.from(win, { autoAlpha: 0, scale: .96, duration: 1, ease: EASE, scrollTrigger: onScroll(pan, "top 85%") });

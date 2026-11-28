@@ -63,7 +63,7 @@
         "couple.lead": "By the grace and blessing of Allah SWT, we joyfully announce the marriage of our beloved children.",
         "couple.aria": "The couple",
         "couple.alt": "Illustration of Sasqia and Rian dancing in a wisteria garden",
-        "couple.hint": "Scroll to meet them",
+        "couple.hint": "Scroll or swipe to meet them",
         "couple.brideParents": "Second daughter of Mr. Patmanjaya, SE and Mrs. Ida Wahyuniari, SH",
         "couple.groomParents": "First son of Mr. Ir. Adi Wijaya Sama and Mrs. Ir. Christina Indrias Dwi",
 

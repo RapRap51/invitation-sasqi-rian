@@ -1316,8 +1316,32 @@ body.wedding-site {
 .pan-window::-webkit-scrollbar {
     display: none;
 }
+/* Kunci tampilan terang walau HP memakai dark mode (sama seperti desain asli) */
+:root,
+html,
+body {
+    color-scheme: only light;
+}
+input,
+select,
+textarea,
+button {
+    color-scheme: only light;
+}
+
 .gsap-ready .pan-window {
     overflow: hidden;
+    /* atas-bawah tetap scroll halaman; kanan-kiri ditangani JS (geser panorama) */
+    touch-action: pan-y;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.gsap-ready .pan-window.is-dragging {
+    cursor: grabbing;
+}
+.pan-track img {
+    -webkit-user-drag: none;
 }
 .pan-track {
     height: 100%;
