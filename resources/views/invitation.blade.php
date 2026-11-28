@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f8edf1">
-    <title>Undangan Pernikahan Sasqia & Rian</title>
+    <title data-i18n="meta.title">Undangan Pernikahan Sasqia & Rian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,500;1,400;1,500&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
         <div class="cover-backdrop" style="background-image:url('{{ asset('img/cover/poster.jpg') }}')" aria-hidden="true"></div>
         <div class="cover-scene" aria-hidden="true">
             <div class="scene-stage">
-                <video class="scene-video" autoplay muted loop playsinline preload="auto" poster="{{ asset('img/cover/poster.jpg') }}">
+                <video class="scene-video" muted playsinline preload="auto" poster="{{ asset('img/cover/poster.jpg') }}">
                     <source src="{{ asset('video/cover.mp4') }}" type="video/mp4">
                 </video>
                 <div class="scene-layers" hidden>
@@ -44,27 +44,29 @@
 
         <div class="cover-inner">
             <div class="cover-top">
-                <p class="eyebrow">THE WEDDING INVITATION</p>
-                <p class="cover-wedding-of">the wedding of</p>
                 <h1 class="cover-title">Sasqia <span>&</span> Rian</h1>
                 <p class="cover-date">23 · 01 · 2027</p>
             </div>
 
-            <button type="button" class="envelope-hotspot" onclick="openInvitation()" aria-label="Buka undangan">
+            <button type="button" class="envelope-hotspot" onclick="openInvitation()" aria-label="Buka undangan" data-i18n-aria="cover.openAria">
                 <span class="hotspot-ring"></span>
-                <span class="hotspot-hint">Ketuk amplop</span>
+                <span class="hotspot-hint" data-i18n="cover.tap">Ketuk amplop</span>
             </button>
 
             <div class="cover-bottom">
                 <div class="guest-greeting">
-                    <span>Kepada Yth.</span>
+                    <span data-i18n="cover.dear">Kepada Yth.</span>
                     <strong>{{ $guest->name }}</strong>
-                    <small class="guest-quota">Undangan berlaku untuk <b>{{ $guest->invitation_count }} orang</b></small>
+                    <small class="guest-quota" data-i18n-html="cover.quota" data-n="{{ $guest->invitation_count }}">Undangan berlaku untuk <b>{{ $guest->invitation_count }} orang</b></small>
                 </div>
                 <button type="button" class="button button-primary open-button" onclick="openInvitation()">
-                    <span class="button-icon">✉</span> Buka Undangan
+                    <span class="button-icon">✉</span> <span data-i18n="cover.open">Buka Undangan</span>
                 </button>
-                <p class="cover-footnote">Mohon doa restu dan kehadiran Anda</p>
+                <p class="cover-footnote" data-i18n="cover.footnote">Mohon doa restu dan kehadiran Anda</p>
+                <div class="lang-switch lang-switch--cover" role="group" aria-label="Pilih bahasa" data-i18n-aria="lang.label">
+                    <button type="button" data-lang="id" aria-pressed="true">ID</button>
+                    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+                </div>
             </div>
         </div>
     </section>
@@ -73,17 +75,23 @@
     <main id="mainContent" class="invitation-main" aria-hidden="true">
         <header class="site-header">
             <a class="brand-mark" href="#home">S <span>&</span> R</a>
-            <nav class="desktop-nav" aria-label="Navigasi undangan">
-                <a href="#home">Beranda</a>
-                <a href="#couple">Mempelai</a>
-                <a href="#event">Acara</a>
-                <a href="#gallery">Galeri</a>
+            <nav class="desktop-nav" aria-label="Navigasi undangan" data-i18n-aria="nav.aria">
+                <a href="#home" data-i18n="nav.home">Beranda</a>
+                <a href="#couple" data-i18n="nav.couple">Mempelai</a>
+                <a href="#event" data-i18n="nav.event">Acara</a>
+                <a href="#gallery" data-i18n="nav.gallery">Galeri</a>
                 <a href="#rsvp">RSVP</a>
-                <a href="#wishes">Ucapan</a>
+                <a href="#wishes" data-i18n="nav.wishes">Ucapan</a>
             </nav>
-            <button class="music-toggle" type="button" aria-label="Putar atau jeda musik" aria-pressed="false">
-                <span class="music-note">♫</span><span class="music-label">Musik</span>
-            </button>
+            <div class="header-actions">
+                <div class="lang-switch" role="group" aria-label="Pilih bahasa" data-i18n-aria="lang.label">
+                    <button type="button" data-lang="id" aria-pressed="true">ID</button>
+                    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+                </div>
+                <button class="music-toggle" type="button" aria-label="Putar atau jeda musik" aria-pressed="false">
+                    <span class="music-note">♫</span><span class="music-label" data-i18n="music.label">Musik</span>
+                </button>
+            </div>
         </header>
 
         <section id="home" class="hero-section section-shell">
@@ -92,79 +100,72 @@
                 <span class="garden-vine vine-left">❧</span><span class="garden-vine vine-right">❧</span>
             </div>
             <div class="hero-copy reveal">
-                <p class="hero-wedding-of">the wedding of</p>
+                <p class="hero-wedding-of" data-i18n="common.weddingOf">pernikahan</p>
                 <h1 class="hero-names"><span>Sasqia</span><i>&</i><span>Rian</span></h1>
-                <p class="hero-subtitle">We are inviting you to our happily ever after…</p>
-                <p class="hero-subtitle-id">Kami mengundangmu ke hari bahagia kami.</p>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">Kami mengundangmu ke hari bahagia kami.</p>
                 <div class="ornament-divider"><span>❦</span></div>
-                <p class="hero-date">SABTU, 23 JANUARI 2027</p>
-                <a href="#event" class="text-link">Lihat detail acara <span>↓</span></a>
+                <p class="hero-date" data-i18n="hero.date">SABTU, 23 JANUARI 2027</p>
+                <p class="wedding-hashtag">#TIARAandtheDANIS</p>
+                <a href="#event" class="text-link"><span data-i18n="hero.details">Lihat detail acara</span> <span>↓</span></a>
             </div>
             <div class="hero-photo-wrap reveal">
                 <div class="hero-photo-frame">
-                    <img src="{{ asset('img/scenes/scene-hero.jpg') }}" alt="Ilustrasi Sasqia dan Rian berdansa di depan gazebo">
+                    <img src="{{ asset('img/scenes/scene-hero.jpg') }}" alt="Ilustrasi Sasqia dan Rian berdansa di depan gazebo" data-i18n-alt="hero.alt">
                 </div>
-                <span class="photo-caption">A little story, a lifetime of love</span>
+                <span class="photo-caption" data-i18n="hero.caption">Sebuah kisah kecil, cinta untuk selamanya</span>
             </div>
-            <div class="scroll-cue">SCROLL TO EXPLORE <span>↓</span></div>
+            <div class="scroll-cue"><b data-i18n="hero.scroll">GULIR UNTUK MENJELAJAH</b> <span>↓</span></div>
         </section>
 
         <section class="quote-section scene-section section-shell">
             <div class="scene-bg" aria-hidden="true"><img src="{{ asset('img/scenes/scene-wisteria.jpg') }}" alt=""></div>
             <div class="scene-card reveal">
-                <p class="eyebrow">A LITTLE FAIRYTALE</p>
-                <div class="quote-mark">“</div>
-                <blockquote>
-                    Some fairytale begin with a heart that had forgotten how to hope, and someone who loved it back to life.
-                </blockquote>
-                <p class="quote-translation">Sebagian dongeng dimulai dari hati yang lupa caranya berharap, lalu dicintai hingga hidup kembali.</p>
                 <div class="ornament-divider"><span>❦</span></div>
-                <p class="quote-verse">“Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya.”</p>
-                <p class="quote-source">QS. Ar-Rum: 21</p>
+                <p class="quote-verse" data-i18n="quote.verse">“Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya.”</p>
+                <p class="quote-source" data-i18n="quote.source">QS. Ar-Rum: 21</p>
             </div>
         </section>
 
         <section id="couple" class="couple-section section-shell">
             <div class="section-heading reveal">
-                <p class="eyebrow">THE PEOPLE BEHIND THE STORY</p>
-                <h2>Memperkenalkan <em>Mempelai</em></h2>
-                <p>Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami.</p>
+                <h2 data-i18n-html="couple.title">Memperkenalkan <em>Mempelai</em></h2>
+                <p data-i18n="couple.lead">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami.</p>
             </div>
         </section>
 
         {{-- Profil mempelai: section ini "menempel" di layar, dan saat di-scroll ke bawah
              panoramanya bergeser dari Sasqia (kiri) ke Rian (kanan). Tanpa GSAP: bisa digeser manual. --}}
-        <section class="couple-pan" aria-label="Profil mempelai">
+        <section class="couple-pan" aria-label="Profil mempelai" data-i18n-aria="couple.aria">
             <div class="pan-stage">
-                <div class="pan-backdrop" style="background-image:url('{{ asset('img/scenes/couple-panorama.jpg') }}')" aria-hidden="true"></div>
+                <div class="pan-backdrop" style="background-image:url('{{ asset('img/scenes/couple-panorama.webp') }}')" aria-hidden="true"></div>
                 <div class="pan-window">
                     <div class="pan-track">
-                        <img src="{{ asset('img/scenes/couple-panorama.jpg') }}" alt="Ilustrasi Sasqia dan Rian berdansa di taman wisteria">
+                        <img src="{{ asset('img/scenes/couple-panorama.webp') }}" alt="Ilustrasi Sasqia dan Rian berdansa di taman wisteria" data-i18n-alt="couple.alt">
                     </div>
                     <div class="pan-dots" aria-hidden="true">
                         <span class="pan-dot pan-dot-bride">Sasqia</span>
                         <span class="pan-dot pan-dot-groom">Rian</span>
                     </div>
-                    <p class="pan-hint" aria-hidden="true">Scroll untuk berkenalan <span>↓</span></p>
+                    <p class="pan-hint" aria-hidden="true"><b data-i18n="couple.hint">Gulir untuk berkenalan</b> <span>↓</span></p>
                 </div>
             </div>
             <div class="sr-only">
                 <h3>Sasqia Tiara Megaprilia, SE</h3>
-                <p>Putri Kedua dari Bapak Patmanjaya, SE dan Ibu Ida Wahyuniari, SH</p>
+                <p data-i18n="couple.brideParents">Putri Kedua dari Bapak Patmanjaya, SE dan Ibu Ida Wahyuniari, SH</p>
                 <h3>Rian Danis Adi Pratama, Ph.D</h3>
-                <p>Putra Pertama dari Bapak Ir. Adi Wijaya Sama dan Ibu Ir. Christina Indrias Dwi</p>
+                <p data-i18n="couple.groomParents">Putra Pertama dari Bapak Ir. Adi Wijaya Sama dan Ibu Ir. Christina Indrias Dwi</p>
             </div>
         </section>
 
         <section class="countdown-section section-shell reveal">
-            <p class="eyebrow">COUNTING THE DAYS</p>
-            <h2>Menghitung Hari</h2>
-            <p class="section-lead">Menuju hari istimewa yang kami nantikan.</p>
+            <p class="eyebrow" data-i18n="countdown.eyebrow">MENUJU HARI BAHAGIA</p>
+            <h2 data-i18n="countdown.title">Menghitung Hari</h2>
+            <p class="section-lead" data-i18n="countdown.lead">Menuju hari istimewa yang kami nantikan.</p>
             <div id="timer" class="countdown-grid">
-                <div class="countdown-item"><strong id="days">0</strong><span>Hari</span></div>
-                <div class="countdown-item"><strong id="hours">0</strong><span>Jam</span></div>
-                <div class="countdown-item"><strong id="minutes">0</strong><span>Menit</span></div>
-                <div class="countdown-item"><strong id="seconds">0</strong><span>Detik</span></div>
+                <div class="countdown-item"><strong id="days">0</strong><span data-i18n="countdown.days">Hari</span></div>
+                <div class="countdown-item"><strong id="hours">0</strong><span data-i18n="countdown.hours">Jam</span></div>
+                <div class="countdown-item"><strong id="minutes">0</strong><span data-i18n="countdown.minutes">Menit</span></div>
+                <div class="countdown-item"><strong id="seconds">0</strong><span data-i18n="countdown.seconds">Detik</span></div>
             </div>
             <p class="countdown-date">23 · 01 · 2027</p>
         </section>
@@ -173,34 +174,45 @@
             <div class="scene-bg" aria-hidden="true"><img src="{{ asset('img/scenes/scene-fountain.jpg') }}" alt=""></div>
             <article class="event-card reveal">
                 <p class="save-the-date"><span>Save</span> THE DATE</p>
-                <h3>Pernikahan Sasqia &amp; Rian</h3>
-                <div class="event-detail"><span>▦</span><div><small>HARI & TANGGAL</small><strong>Sabtu, 23 Januari 2027</strong></div></div>
-                <div class="event-detail"><span>◷</span><div><small>WAKTU</small><strong>10.00 – 14.00 WIB</strong></div></div>
-                <div class="event-detail"><span>⌖</span><div><small>LOKASI</small><strong>Hotel Dafam Pacific Caesar Surabaya</strong><em>Jl. Dr. Ir. Soekarno No. 45C, Surabaya</em></div></div>
-                <a class="button button-outline" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel+Dafam+Pacific+Caesar+Surabaya" target="_blank" rel="noopener">Lihat Lokasi di Google Maps ↗</a>
-                <p class="event-note">Kehadiran dan doa restu Anda merupakan hadiah terindah bagi kami.</p>
+                <h3 data-i18n-html="event.title">Pernikahan Sasqia &amp; Rian</h3>
+                <div class="event-detail"><span>▦</span><div><small data-i18n="event.dateLabel">HARI & TANGGAL</small><strong data-i18n="event.date">Sabtu, 23 Januari 2027</strong></div></div>
+                <div class="event-detail"><span>◷</span><div><small data-i18n="event.timeLabel">WAKTU</small><strong data-i18n="event.time">11.00 – 14.00 WIB</strong></div></div>
+                <div class="event-detail"><span>⌖</span><div><small data-i18n="event.placeLabel">LOKASI</small><strong>Hotel Dafam Pacific Caesar Surabaya</strong><em>Jl. Dr. Ir. Soekarno No. 45C, Surabaya</em></div></div>
+                <a class="button button-outline" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel+Dafam+Pacific+Caesar+Surabaya" target="_blank" rel="noopener" data-i18n="event.maps">Lihat Lokasi di Google Maps ↗</a>
+                <p class="event-note" data-i18n="event.note">Kehadiran dan doa restu Anda merupakan hadiah terindah bagi kami.</p>
             </article>
         </section>
 
-        <section id="gallery" class="gallery-section section-shell">
-            <div class="section-heading reveal">
-                <p class="eyebrow">OUR LITTLE MOMENTS</p>
-                <h2>Galeri <em>Cerita</em></h2>
-                <p>Potongan kecil dari perjalanan yang kami syukuri.</p>
+        <section id="gallery" class="gallery-stage" aria-label="Galeri" data-i18n-aria="nav.gallery">
+            {{-- Kolase foto: hitam-putih & samar di belakang sampul, berwarna & bisa digeser setelah "Buka Galeri". --}}
+            <div class="gallery-collage" id="galleryCollage" tabindex="-1" aria-label="Galeri foto, geser ke kanan atau kiri" data-i18n-aria="gallery.trackAria">
+                <figure class="collage-item"><img src="{{ asset('img/gallery/photo-1.jpg') }}" alt="Sasqia dan Rian menunjukkan cincin" data-i18n-alt="gallery.alt1" loading="lazy" draggable="false"></figure>
+                <figure class="collage-item"><img src="{{ asset('img/gallery/photo-2.jpg') }}" alt="Sasqia dan Rian di depan dekorasi bunga" data-i18n-alt="gallery.alt2" loading="lazy" draggable="false"></figure>
+                <figure class="collage-item"><img src="{{ asset('img/gallery/photo-3.jpg') }}" alt="Rian menyampaikan sambutan" data-i18n-alt="gallery.alt3" loading="lazy" draggable="false"></figure>
+                <figure class="collage-item"><img src="{{ asset('img/gallery/photo-4.jpg') }}" alt="Sasqia dan Rian tertawa bersama" data-i18n-alt="gallery.alt4" loading="lazy" draggable="false"></figure>
+                <figure class="collage-item"><img src="{{ asset('img/gallery/photo-5.jpg') }}" alt="Sasqia dan Rian duduk berdampingan" data-i18n-alt="gallery.alt5" loading="lazy" draggable="false"></figure>
             </div>
-            <div class="gallery-grid">
-                <button class="gallery-item gallery-tall reveal" type="button" data-gallery="{{ asset('img/scenes/gallery-1.jpg') }}"><img src="{{ asset('img/scenes/gallery-1.jpg') }}" alt="Sasqia dan Rian berdansa di taman"><span>01</span></button>
-                <button class="gallery-item reveal" type="button" data-gallery="{{ asset('img/scenes/gallery-2.jpg') }}"><img src="{{ asset('img/scenes/gallery-2.jpg') }}" alt="Sasqia"><span>02</span></button>
-                <button class="gallery-item reveal" type="button" data-gallery="{{ asset('img/scenes/gallery-3.jpg') }}"><img src="{{ asset('img/scenes/gallery-3.jpg') }}" alt="Rian"><span>03</span></button>
-                <button class="gallery-item reveal" type="button" data-gallery="{{ asset('img/scenes/gallery-4.jpg') }}"><img src="{{ asset('img/scenes/gallery-4.jpg') }}" alt="Sasqia dan Rian"><span>04</span></button>
+
+            <div class="gallery-cover">
+                <div class="section-heading">
+                    <p class="eyebrow" data-i18n="gallery.eyebrow">MOMEN KECIL KAMI</p>
+                    <h2 data-i18n-html="gallery.title">Galeri <em>Cerita</em></h2>
+                </div>
+                <div class="gallery-frame">
+                    <img src="{{ asset('img/gallery/photo-1.jpg') }}" alt="" loading="lazy">
+                </div>
+                <button type="button" class="button button-primary gallery-open" aria-controls="galleryCollage" aria-expanded="false" data-i18n="gallery.open">Buka Galeri</button>
             </div>
+
+            <button type="button" class="gallery-close" aria-label="Tutup galeri" data-i18n-aria="gallery.close" hidden>✕</button>
+            <div class="gallery-swipe" aria-hidden="true"><span class="swipe-hand">☝</span><span data-i18n="gallery.swipe">Geser</span></div>
         </section>
 
         <section id="rsvp" class="rsvp-section section-shell">
             <div class="section-heading reveal">
-                <p class="eyebrow">KINDLY RESPOND</p>
-                <h2>Konfirmasi <em>Kehadiran</em></h2>
-                <p>Mohon bantu kami mempersiapkan acara dengan mengisi konfirmasi berikut.</p>
+                <p class="eyebrow" data-i18n="rsvp.eyebrow">MOHON KONFIRMASI</p>
+                <h2 data-i18n-html="rsvp.title">Konfirmasi <em>Kehadiran</em></h2>
+                <p data-i18n="rsvp.lead">Mohon bantu kami mempersiapkan acara dengan mengisi konfirmasi berikut.</p>
             </div>
             @if (session('success'))
                 <div class="notice notice-success">{{ session('success') }}</div>
@@ -211,22 +223,22 @@
 
             <form id="rsvpForm" class="form-card reveal" method="POST" action="{{ route('rsvp.store', ['code' => $guest->short_code]) }}">
                 @csrf
-                <label for="nama">Nama lengkap</label>
-                <input type="text" name="nama" id="nama" value="{{ $guest->name }}" placeholder="Nama Anda" required>
-                <label for="kehadiran">Konfirmasi kehadiran</label>
+                <label for="nama" data-i18n="rsvp.name">Nama lengkap</label>
+                <input type="text" name="nama" id="nama" value="{{ $guest->name }}" placeholder="Nama Anda" data-i18n-placeholder="form.namePh" required>
+                <label for="kehadiran" data-i18n="rsvp.attend">Konfirmasi kehadiran</label>
                 <select name="kehadiran" id="kehadiran" required>
-                    <option value="Hadir">Dengan senang hati, saya hadir</option>
-                    <option value="Tidak Hadir">Maaf, saya belum dapat hadir</option>
+                    <option value="Hadir" data-i18n="rsvp.yes">Dengan senang hati, saya hadir</option>
+                    <option value="Tidak Hadir" data-i18n="rsvp.no">Maaf, saya belum dapat hadir</option>
                 </select>
                 <div id="jumlahwrapper">
-                    <label for="jumlah">Jumlah tamu yang hadir</label>
+                    <label for="jumlah" data-i18n="rsvp.count">Jumlah tamu yang hadir</label>
                     <select name="jumlah" id="jumlah" required>
                         @for ($i = 1; $i <= $guest->invitation_count; $i++)
-                            <option value="{{ $i }}">{{ $i }} orang</option>
+                            <option value="{{ $i }}" data-i18n="rsvp.people" data-n="{{ $i }}">{{ $i }} orang</option>
                         @endfor
                     </select>
                 </div>
-                <button type="submit" class="button button-primary form-submit">Kirim Konfirmasi <span>→</span></button>
+                <button type="submit" class="button button-primary form-submit"><span data-i18n="rsvp.submit">Kirim Konfirmasi</span> <span>→</span></button>
             </form>
 
             @if ($guest->rsvp_status === 'confirmed')
@@ -236,31 +248,31 @@
                 @endphp
                 <div class="guest-qr-section reveal" id="guest-qr">
                     <span class="qr-check">✓</span>
-                    <h3>RSVP Berhasil</h3>
-                    <p>Simpan QR Code ini dan tunjukkan kepada panitia saat hari acara.</p>
+                    <h3 data-i18n="qr.title">RSVP Berhasil</h3>
+                    <p data-i18n="qr.lead">Simpan QR Code ini dan tunjukkan kepada panitia saat hari acara.</p>
                     <div class="guest-qr-card">{!! QrCode::size(220)->generate($checkinUrl) !!}</div>
                     <strong class="guest-qr-code">{{ $shortCode }}</strong>
-                    <small>QR ini merupakan tanda check-in undangan Anda.</small>
+                    <small data-i18n="qr.note">QR ini merupakan tanda check-in undangan Anda.</small>
                 </div>
             @endif
         </section>
 
         <section id="wishes" class="wishes-section section-shell">
             <div class="section-heading reveal">
-                <p class="eyebrow">WORDS FROM THE HEART</p>
-                <h2>Ucapan & <em>Doa</em></h2>
-                <p>Tuliskan doa terbaik untuk mengiringi awal perjalanan kami.</p>
+                <p class="eyebrow" data-i18n="wishes.eyebrow">DARI LUBUK HATI</p>
+                <h2 data-i18n-html="wishes.title">Ucapan & <em>Doa</em></h2>
+                <p data-i18n="wishes.lead">Tuliskan doa terbaik untuk mengiringi awal perjalanan kami.</p>
             </div>
             @if (session('wish_success'))
                 <div class="notice notice-success">{{ session('wish_success') }}</div>
             @endif
             <form method="POST" action="{{ route('wish.store', ['code' => $guest->short_code]) }}" class="wish-form form-card reveal">
                 @csrf
-                <label for="wishName">Nama</label>
-                <input type="text" name="nama" id="wishName" placeholder="Nama Anda" required>
-                <label for="wishMessage">Ucapan dan doa</label>
-                <textarea name="ucapan" id="wishMessage" placeholder="Tuliskan ucapan dan doa terbaik..." required></textarea>
-                <button type="submit" class="button button-primary form-submit">Kirim Ucapan <span>♡</span></button>
+                <label for="wishName" data-i18n="wishes.name">Nama</label>
+                <input type="text" name="nama" id="wishName" placeholder="Nama Anda" data-i18n-placeholder="form.namePh" required>
+                <label for="wishMessage" data-i18n="wishes.message">Ucapan dan doa</label>
+                <textarea name="ucapan" id="wishMessage" placeholder="Tuliskan ucapan dan doa terbaik..." data-i18n-placeholder="wishes.messagePh" required></textarea>
+                <button type="submit" class="button button-primary form-submit"><span data-i18n="wishes.submit">Kirim Ucapan</span> <span>♡</span></button>
             </form>
 
             <div class="wishes-list" id="wishesList">
@@ -273,43 +285,40 @@
                         </div>
                     </article>
                 @empty
-                    <div class="wish-empty" id="wishEmpty"><span>♡</span><p>Belum ada ucapan dan doa.</p><small>Jadilah yang pertama mengirimkan doa terbaik.</small></div>
+                    <div class="wish-empty" id="wishEmpty"><span>♡</span><p data-i18n="wishes.empty">Belum ada ucapan dan doa.</p><small data-i18n="wishes.emptyNote">Jadilah yang pertama mengirimkan doa terbaik.</small></div>
                 @endforelse
             </div>
             @if ($wishes->hasMorePages())
-                <div class="wish-pagination" id="wishPagination"><button type="button" id="loadMoreWishes" class="button button-outline wish-load-more">Lihat ucapan lainnya ↓</button></div>
+                <div class="wish-pagination" id="wishPagination"><button type="button" id="loadMoreWishes" class="button button-outline wish-load-more" data-i18n="wishes.more">Lihat ucapan lainnya ↓</button></div>
             @endif
         </section>
 
         <section class="closing-section section-shell reveal">
-            <div class="closing-photo"><img src="{{ asset('img/scenes/scene-closing.jpg') }}" alt="Sasqia dan Rian"></div>
+            <div class="closing-photo"><img src="{{ asset('img/scenes/scene-closing.jpg') }}" alt="Sasqia dan Rian" data-i18n-alt="closing.alt"></div>
             <div class="closing-flower">❀</div>
-            <p class="eyebrow">WITH LOVE AND GRATITUDE</p>
-            <h2>Terima Kasih</h2>
-            <p>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
-            <p class="closing-wedding-of">the wedding of</p>
+            <p class="eyebrow" data-i18n="closing.eyebrow">DENGAN CINTA DAN TERIMA KASIH</p>
+            <h2 data-i18n="closing.title">Terima Kasih</h2>
+            <p data-i18n="closing.lead">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+            <p class="closing-wedding-of" data-i18n="common.weddingOf">pernikahan</p>
             <p class="closing-sign">Sasqia <span>&</span> Rian</p>
+            <p class="wedding-hashtag">#TIARAandtheDANIS</p>
             <small>23 · 01 · 2027</small>
         </section>
 
-        <footer class="site-footer">Made with <span>♥</span> for Sasqia & Rian</footer>
+        <footer class="site-footer">a little note by <strong>nodetone</strong></footer>
     </main>
 
-    <div class="lightbox" id="galleryLightbox" aria-hidden="true">
-        <button type="button" class="lightbox-close" aria-label="Tutup foto">×</button>
-        <img src="" alt="Foto galeri">
-    </div>
-
-    <nav class="mobile-dock" aria-label="Navigasi cepat">
-        <a href="#home"><span>⌂</span><small>Home</small></a>
-        <a href="#couple"><span>♡</span><small>Mempelai</small></a>
-        <a href="#event"><span>✧</span><small>Acara</small></a>
-        <a href="#gallery"><span>▧</span><small>Galeri</small></a>
+    <nav class="mobile-dock" aria-label="Navigasi cepat" data-i18n-aria="nav.quickAria">
+        <a href="#home"><span>⌂</span><small data-i18n="nav.home">Beranda</small></a>
+        <a href="#couple"><span>♡</span><small data-i18n="nav.couple">Mempelai</small></a>
+        <a href="#event"><span>✧</span><small data-i18n="nav.event">Acara</small></a>
+        <a href="#gallery"><span>▧</span><small data-i18n="nav.gallery">Galeri</small></a>
         <a href="#rsvp"><span>✓</span><small>RSVP</small></a>
     </nav>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="{{ asset('js/wedding-i18n.js') }}"></script>
     <script src="{{ asset('js/wedding-invitation.js') }}"></script>
     <script src="{{ asset('js/wedding-gsap.js') }}"></script>
 </body>

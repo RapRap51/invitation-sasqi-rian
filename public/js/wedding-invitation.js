@@ -8,6 +8,8 @@
     const mainContent = document.getElementById("mainContent");
     const music = document.getElementById("music");
     const musicToggle = document.querySelector(".music-toggle");
+    // Terjemahan (wedding-i18n.js). Fallback ke teks Indonesia bila file itu tidak dimuat.
+    const t = (key, fallback) => (window.weddingI18n ? window.weddingI18n.t(key) : fallback);
 
     // Sampul berlayer: pakai PNG per-aset bila SEMUA layer tersedia,
     // jika tidak tetap memakai video sampul.
@@ -35,35 +37,38 @@
         });
     }
 
-    // Mode video: sampul hanya mengulang adegan amplop berayun (0–LOOP_END detik).
-    // Saat dibuka, video lanjut memutar adegan amplop terbuka ("We are inviting you")
-    // sampai OPEN_END, baru undangan utama ditampilkan.
-    const COVER_LOOP_END = 2.6;
+    // Mode video: sampul diam (freeze) di frame pertama amplop.
+    // Saat amplop / tombol diklik, video melompat ke adegan amplop terbuka
+    // (OPEN_START-OPEN_END) dan memutarnya perlahan, baru undangan utama tampil.
+    const COVER_OPEN_START = 2.6;
     const COVER_OPEN_END = 4.6;
+    const COVER_OPEN_RATE = 0.55;   // < 1 = lebih lambat
     const coverVideo = cover ? cover.querySelector(".scene-video") : null;
     let opened = false;
     if (coverVideo) {
-        const keepLooping = () => {
-            if (!opened && coverVideo.currentTime >= COVER_LOOP_END) coverVideo.currentTime = 0;
-        };
-        coverVideo.addEventListener("timeupdate", keepLooping);
-        if ("requestVideoFrameCallback" in coverVideo) {
-            const onFrame = () => { keepLooping(); if (!opened) coverVideo.requestVideoFrameCallback(onFrame); };
-            coverVideo.requestVideoFrameCallback(onFrame);
-        }
+        const freeze = () => { if (!opened) { coverVideo.pause(); coverVideo.currentTime = 0; } };
+        if (coverVideo.readyState >= 1) freeze();
+        else coverVideo.addEventListener("loadedmetadata", freeze, { once: true });
     }
 
     function afterCoverIntro(done) {
         const videoMode = coverVideo && !window.__coverLayered && coverVideo.readyState >= 2;
-        if (!videoMode) return window.setTimeout(done, 900);
+        if (!videoMode) return window.setTimeout(done, 1600);
         let finished = false;
-        const finish = () => { if (finished) return; finished = true; window.clearInterval(watch); done(); };
-        coverVideo.playbackRate = 1.4;
+        const finish = () => { if (finished) return; finished = true; window.clearInterval(watch); coverVideo.pause(); done(); };
+        // Lompat ke adegan amplop terbuka. Bila server tidak mendukung seek
+        // (mis. `php artisan serve` tanpa HTTP Range), video tetap diputar dari awal
+        // dengan kecepatan normal lalu melambat saat adegan terbuka dimulai.
+        coverVideo.currentTime = COVER_OPEN_START;
+        coverVideo.playbackRate = 1;
         coverVideo.play().catch(finish);
         const watch = window.setInterval(() => {
-            if (coverVideo.currentTime >= COVER_OPEN_END || coverVideo.ended) finish();
-        }, 50);
-        window.setTimeout(finish, 4500);
+            const t = coverVideo.currentTime;
+            if (t >= COVER_OPEN_START - 0.05 && coverVideo.playbackRate !== COVER_OPEN_RATE) coverVideo.playbackRate = COVER_OPEN_RATE;
+            if (t >= COVER_OPEN_END || coverVideo.ended) finish();
+        }, 30);
+        // Batas aman: durasi adegan (termasuk kemungkinan putar dari awal) + sedikit jeda.
+        window.setTimeout(finish, (COVER_OPEN_START + (COVER_OPEN_END - COVER_OPEN_START) / COVER_OPEN_RATE) * 1000 + 1500);
     }
 
     function revealMainContent() {
@@ -95,7 +100,8 @@
         if (!musicToggle) return;
         musicToggle.classList.toggle("is-playing", playing);
         musicToggle.setAttribute("aria-pressed", playing ? "true" : "false");
-        musicToggle.setAttribute("aria-label", playing ? "Jeda musik" : "Putar musik");
+        musicToggle.dataset.i18nAria = playing ? "music.pause" : "music.play";
+        musicToggle.setAttribute("aria-label", playing ? t("music.pause", "Jeda musik") : t("music.play", "Putar musik"));
     }
 
     if (musicToggle && music) {
@@ -165,31 +171,59 @@
         updateQuantityVisibility();
     }
 
-    // Gallery lightbox
-    const lightbox = document.getElementById("galleryLightbox");
-    if (lightbox) {
-        const lightboxImage = lightbox.querySelector("img");
-        const closeButton = lightbox.querySelector(".lightbox-close");
-        document.querySelectorAll("[data-gallery]").forEach(item => {
-            item.addEventListener("click", () => {
-                lightboxImage.src = item.dataset.gallery;
-                lightbox.classList.add("is-open");
-                lightbox.setAttribute("aria-hidden", "false");
-                document.body.style.overflow = "hidden";
-            });
-        });
-        const closeLightbox = () => {
-            lightbox.classList.remove("is-open");
-            lightbox.setAttribute("aria-hidden", "true");
-            lightboxImage.src = "";
-            document.body.style.overflow = "";
+    // Galeri ala kolase: sampul bingkai oval + "Buka Galeri".
+    // Setelah dibuka, kolase menjadi berwarna dan bisa digeser kanan-kiri.
+    const galleryStage = document.getElementById("gallery");
+    const galleryCollage = document.getElementById("galleryCollage");
+    if (galleryStage && galleryCollage) {
+        const openBtn = galleryStage.querySelector(".gallery-open");
+        const closeBtn = galleryStage.querySelector(".gallery-close");
+        const swipe = galleryStage.querySelector(".gallery-swipe");
+
+        const setOpen = open => {
+            galleryStage.classList.toggle("is-open", open);
+            if (openBtn) openBtn.setAttribute("aria-expanded", open ? "true" : "false");
+            if (closeBtn) closeBtn.hidden = !open;
+            galleryCollage.tabIndex = open ? 0 : -1;
+            if (open) {
+                galleryCollage.scrollLeft = 0;
+                if (swipe) swipe.classList.add("is-visible");
+                // Pas-kan galeri memenuhi layar (dikoreksi sekali bila tata letak bergeser saat scroll).
+                const fit = behavior => window.scrollTo({ top: galleryStage.getBoundingClientRect().top + window.scrollY, behavior });
+                fit("smooth");
+                window.setTimeout(() => { if (Math.abs(galleryStage.getBoundingClientRect().top) > 4) fit("smooth"); }, 700);
+                galleryCollage.focus({ preventScroll: true });
+                document.dispatchEvent(new CustomEvent("gallery:opened"));
+            } else {
+                if (swipe) swipe.classList.remove("is-visible");
+                galleryCollage.scrollTo({ left: 0, behavior: "smooth" });
+                if (openBtn) openBtn.focus({ preventScroll: true });
+                document.dispatchEvent(new CustomEvent("gallery:closed"));
+            }
         };
-        closeButton.addEventListener("click", closeLightbox);
-        lightbox.addEventListener("click", event => {
-            if (event.target === lightbox) closeLightbox();
-        });
+
+        if (openBtn) openBtn.addEventListener("click", () => setOpen(true));
+        if (closeBtn) closeBtn.addEventListener("click", () => setOpen(false));
         document.addEventListener("keydown", event => {
-            if (event.key === "Escape") closeLightbox();
+            if (event.key === "Escape" && galleryStage.classList.contains("is-open")) setOpen(false);
+        });
+        // Petunjuk "Geser" hilang setelah tamu mulai menggeser.
+        galleryCollage.addEventListener("scroll", () => {
+            if (swipe && galleryCollage.scrollLeft > 30) swipe.classList.remove("is-visible");
+        }, { passive: true });
+        // Roda mouse vertikal → geser horizontal (desktop).
+        galleryCollage.addEventListener("wheel", event => {
+            if (!galleryStage.classList.contains("is-open") || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+            const max = galleryCollage.scrollWidth - galleryCollage.clientWidth;
+            const atEdge = (event.deltaY < 0 && galleryCollage.scrollLeft <= 0) || (event.deltaY > 0 && galleryCollage.scrollLeft >= max - 1);
+            if (atEdge) return; // biarkan halaman lanjut scroll di ujung galeri
+            event.preventDefault();
+            galleryCollage.scrollLeft += event.deltaY;
+        }, { passive: false });
+        galleryCollage.addEventListener("keydown", event => {
+            const step = galleryCollage.clientWidth * 0.8;
+            if (event.key === "ArrowRight") { event.preventDefault(); galleryCollage.scrollBy({ left: step, behavior: "smooth" }); }
+            if (event.key === "ArrowLeft") { event.preventDefault(); galleryCollage.scrollBy({ left: -step, behavior: "smooth" }); }
         });
     }
 
@@ -206,9 +240,9 @@
         loadMoreButton.addEventListener("click", async () => {
             const segments = window.location.pathname.split("/").filter(Boolean);
             const code = segments[segments.length - 1];
-            const originalText = loadMoreButton.textContent;
             loadMoreButton.disabled = true;
-            loadMoreButton.textContent = "Memuat ucapan...";
+            loadMoreButton.dataset.i18n = "wishes.loading";
+            loadMoreButton.textContent = t("wishes.loading", "Memuat ucapan...");
             try {
                 const response = await fetch(`/undangan/${encodeURIComponent(code)}/wishes?page=${wishesPage + 1}`, {
                     headers: { "Accept": "application/json", "X-Requested-With": "XMLHttpRequest" }
@@ -235,11 +269,13 @@
                     if (pagination) pagination.remove();
                 } else {
                     loadMoreButton.disabled = false;
-                    loadMoreButton.textContent = originalText;
+                    loadMoreButton.dataset.i18n = "wishes.more";
+                    loadMoreButton.textContent = t("wishes.more", "Lihat ucapan lainnya \u2193");
                 }
             } catch (error) {
                 loadMoreButton.disabled = false;
-                loadMoreButton.textContent = "Coba lagi";
+                loadMoreButton.dataset.i18n = "wishes.retry";
+                loadMoreButton.textContent = t("wishes.retry", "Coba lagi");
             }
         });
     }

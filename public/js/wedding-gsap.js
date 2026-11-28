@@ -76,8 +76,6 @@
         const textTl = gsap.timeline({ defaults: { ease: EASE }, delay: .3 });
         textTl
             .from(".cover-top", { y: -40, autoAlpha: 0, duration: .9 })
-            .from(".cover-top .eyebrow", { letterSpacing: "0.6em", autoAlpha: 0, duration: .8 }, "-=.5")
-            .from(".cover-wedding-of", { y: 10, autoAlpha: 0, duration: .6 }, "-=.5")
             .from(".cover-title", { scale: .85, autoAlpha: 0, filter: "blur(8px)", duration: 1.1, ease: "power2.out" }, "-=.5")
             .from(".cover-date", { autoAlpha: 0, y: 8, duration: .6 }, "-=.5")
             .from(".cover-bottom", { y: 50, autoAlpha: 0, duration: .9 }, "-=.6")
@@ -165,8 +163,8 @@
             const layered = cover.querySelector(".cover-scene.is-layered");
             const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
             tl.to(".hotspot-ring, .hotspot-hint", { autoAlpha: 0, duration: .25 }, 0)
-              .to(".cover-top", { yPercent: -130, autoAlpha: 0, duration: .6 }, 0)
-              .to(".cover-bottom", { yPercent: 130, autoAlpha: 0, duration: .6 }, 0);
+              .to(".cover-top", { yPercent: -130, autoAlpha: 0, duration: 1.2 }, 0)
+              .to(".cover-bottom", { yPercent: 130, autoAlpha: 0, duration: 1.2 }, 0);
             if (layered) {
                 tl.to(".layer-envelope", { rotation: 0, y: 0, scale: 1.9, autoAlpha: 0, duration: .9, ease: "power2.in" }, .05)
                   .to(".layer-wisteria-left", { xPercent: -60, duration: .9 }, .05)
@@ -175,7 +173,7 @@
                   .to(".layer-background, .layer-arch, .layer-flowers-left, .layer-flowers-right", { scale: 1.15, duration: .9 }, .05);
             } else {
                 // Video sedang memutar adegan amplop terbuka; kamera mendekat pelan.
-                tl.to(stage, { scale: 1.18, transformOrigin: "47% 51%", duration: 3.2, ease: "power1.inOut" }, .05);
+                tl.to(stage, { scale: 1.18, transformOrigin: "47% 51%", duration: 4.2, ease: "power1.inOut" }, .05);
             }
         }, { once: true });
         document.addEventListener("invitation:opened", () => {
@@ -204,9 +202,10 @@
             .from(".hero-wedding-of", { y: 20, autoAlpha: 0, filter: "blur(6px)", duration: .8 })
             .from(heroNames, { yPercent: 110, rotation: 8, autoAlpha: 0, duration: .9, stagger: .06, ease: "back.out(1.7)" }, "-=.3")
             .from(".hero-names i", { scale: 0, rotation: -90, autoAlpha: 0, duration: .8, ease: "back.out(2)" }, "-=.6")
-            .from(".hero-subtitle, .hero-subtitle-id", { y: 20, autoAlpha: 0, duration: .7, stagger: .15 }, "-=.4")
+            .from(".hero-subtitle", { y: 20, autoAlpha: 0, duration: .7 }, "-=.4")
             .from(".hero-copy .ornament-divider", { scaleX: 0, autoAlpha: 0, duration: .8 }, "-=.4")
             .from(".hero-date", { letterSpacing: "0.6em", autoAlpha: 0, duration: .8 }, "-=.5")
+            .from(".hero-copy .wedding-hashtag", { y: 10, autoAlpha: 0, duration: .6 }, "-=.4")
             .from(".hero-copy .text-link", { y: 12, autoAlpha: 0, duration: .5 }, "-=.4")
             .from(".hero-photo-frame", {
                 clipPath: "inset(100% 0% 0% 0% round 48% 48% 8px 8px)",
@@ -254,17 +253,12 @@
         });
         gsap.from(".scene-card", { y: 80, scale: .94, autoAlpha: 0, duration: 1.1, ease: EASE, scrollTrigger: onScroll(".quote-section", "top 70%") });
 
-        /* QUOTE */
+        /* QUOTE (ayat) */
         const quote = $(".quote-section");
         if (quote) {
-            const words = splitText($("blockquote", quote), "words");
             gsap.timeline({ scrollTrigger: onScroll(quote, "top 75%"), defaults: { ease: EASE } })
-                .from($(".eyebrow", quote), { y: 15, autoAlpha: 0, duration: .6 })
-                .from($(".quote-mark", quote), { scale: 0, rotation: -45, autoAlpha: 0, duration: .8, ease: "back.out(2)" }, "-=.3")
-                .from(words, { y: 14, autoAlpha: 0, duration: .5, stagger: .035 }, "-=.4")
-                .from($(".quote-translation", quote), { autoAlpha: 0, y: 12, duration: .6 }, "-=.2")
-                .from($(".ornament-divider", quote), { scaleX: 0, autoAlpha: 0, duration: .7 }, "-=.2")
-                .from($$(".quote-verse, .quote-source", quote), { autoAlpha: 0, y: 14, duration: .6, stagger: .12 }, "-=.3");
+                .from($(".ornament-divider", quote), { scaleX: 0, autoAlpha: 0, duration: .7 })
+                .from($$(".quote-verse, .quote-source", quote), { autoAlpha: 0, y: 14, duration: .7, stagger: .15 }, "-=.3");
         }
 
         /* SECTION HEADINGS */
@@ -284,7 +278,7 @@
             const track = $(".pan-track", pan);
             const distance = () => Math.max(0, track.scrollWidth - win.clientWidth);
             // Titik tengah teks nama di panorama (piksel gambar asli, lebar 1317).
-            const PANO_W = 1317, BRIDE_X = 365, GROOM_X = 957;
+            const PANO_W = 1317, BRIDE_X = 345, GROOM_X = 965;
             const focusX = imgX => {
                 const scale = track.scrollWidth / PANO_W;
                 return -gsap.utils.clamp(0, distance(), imgX * scale - win.clientWidth / 2);
@@ -350,16 +344,16 @@
                 .from($(".event-note", eventCard), { autoAlpha: 0, duration: .6 }, "-=.2");
         }
 
-        /* GALLERY */
-        const galleryItems = $$(".gallery-item");
-        if (galleryItems.length) {
-            gsap.from(galleryItems, {
-                y: 80, autoAlpha: 0, rotation: (i) => (i % 2 ? 4 : -4), duration: 1, stagger: .15, ease: EASE,
-                scrollTrigger: onScroll(".gallery-grid", "top 82%")
-            });
-            gsap.from(galleryItems.map(item => $("span", item)), {
-                x: -20, autoAlpha: 0, duration: .5, stagger: .15, delay: .6, ease: EASE,
-                scrollTrigger: onScroll(".gallery-grid", "top 82%")
+        /* GALLERY: sampul bingkai oval masuk, foto kolase muncul bergiliran saat dibuka */
+        const galleryStage = $("#gallery");
+        if (galleryStage) {
+            gsap.timeline({ scrollTrigger: onScroll(galleryStage, "top 70%"), defaults: { ease: EASE } })
+                .from($(".gallery-frame", galleryStage), { scale: .85, autoAlpha: 0, duration: 1.1 })
+                .from($(".gallery-open", galleryStage), { y: 16, autoAlpha: 0, duration: .6, ...withoutTransition($(".gallery-open", galleryStage)) }, "-=.4");
+            gsap.to(".gallery-frame img", { scale: 1.06, duration: 6, ease: "sine.inOut", yoyo: true, repeat: -1 });
+            gsap.to(".swipe-hand", { x: -14, rotation: -12, duration: .8, ease: "sine.inOut", yoyo: true, repeat: -1 });
+            document.addEventListener("gallery:opened", () => {
+                gsap.fromTo(".collage-item img", { y: 40, scale: .96 }, { y: 0, scale: 1, duration: .9, stagger: .08, ease: EASE, clearProps: "transform" });
             });
         }
 
@@ -415,16 +409,16 @@
                 .from($(".closing-photo", closing), { clipPath: "inset(100% 0% 0% 0% round 48% 48% 10px 10px)", y: 40, duration: 1.3, ease: "power4.out" })
                 .from($(".closing-photo img", closing), { scale: 1.3, duration: 1.6, ease: "power2.out" }, "<")
                 .from($(".closing-flower", closing), { scale: 0, rotation: -270, autoAlpha: 0, duration: 1.2, ease: "back.out(1.8)" }, "-=.8")
-                .from($$(".eyebrow, h2, :scope > p:not(.closing-sign):not(.closing-wedding-of)", closing), { y: 24, autoAlpha: 0, stagger: .14, duration: .7 }, "-=.6")
+                .from($$(".eyebrow, h2, :scope > p:not(.closing-sign):not(.closing-wedding-of):not(.wedding-hashtag)", closing), { y: 24, autoAlpha: 0, stagger: .14, duration: .7 }, "-=.6")
                 .from($(".closing-wedding-of", closing), { y: 14, autoAlpha: 0, duration: .6 }, "-=.2")
                 .from($(".closing-sign", closing), { scale: .6, autoAlpha: 0, filter: "blur(6px)", duration: 1.1, ease: "power2.out" }, "-=.2")
+                .from($(".wedding-hashtag", closing), { y: 12, autoAlpha: 0, duration: .6 }, "-=.4")
                 .from($(":scope > small", closing), { letterSpacing: "0.6em", autoAlpha: 0, duration: .8 }, "-=.5");
             gsap.to(".closing-flower", { rotation: 360, duration: 20, ease: "none", repeat: -1 });
         }
 
         /* FOOTER */
         gsap.from(".site-footer", { autoAlpha: 0, y: 20, duration: .8, scrollTrigger: onScroll(".site-footer", "top 98%") });
-        gsap.to(".site-footer span", { scale: 1.3, duration: .45, ease: "power1.inOut", yoyo: true, repeat: -1, repeatDelay: .6, transformOrigin: "50% 60%" });
 
         // Hati di kartu ucapan berdenyut saat hover.
         document.addEventListener("mouseover", event => {
@@ -452,18 +446,6 @@
                 gsap.fromTo(batch.map(c => $(".wish-avatar", c)).filter(Boolean), { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: .6, stagger: .1, delay: .2, ease: "back.out(2.5)" });
             }
         });
-    }
-
-    /* ---------- LIGHTBOX ---------- */
-    const lightbox = $("#galleryLightbox");
-    if (lightbox && "MutationObserver" in window) {
-        new MutationObserver(() => {
-            if (lightbox.classList.contains("is-open")) {
-                gsap.fromTo(lightbox, { autoAlpha: 0 }, { autoAlpha: 1, duration: .35, ease: "power2.out" });
-                gsap.fromTo($("img", lightbox), { scale: .8, y: 30, autoAlpha: 0 }, { scale: 1, y: 0, autoAlpha: 1, duration: .6, ease: "back.out(1.5)" });
-                gsap.fromTo($(".lightbox-close", lightbox), { rotation: -90, autoAlpha: 0 }, { rotation: 0, autoAlpha: 1, duration: .5, delay: .15, ease: EASE });
-            }
-        }).observe(lightbox, { attributes: true, attributeFilter: ["class"] });
     }
 
     document.addEventListener("invitation:opened", buildMainAnimations);
